@@ -120,10 +120,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> <!-- end of osd-status div -->
-            <div class="col-sm-12 col-md-8 col-xs-12" id="monitor_status"><!-- begin of monitor status -->
-                <div class="panel panel-default">
+                </div><!-- end of osd-status div -->
+		<div class="panel panel-default"><!-- begin of monitor status -->
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Ceph Cluster Monitors status
@@ -140,10 +138,43 @@
                             {% endfor %}
                         </div>
                     </div>
+                </div><!-- end of monitor status -->
+            </div> 
+	        <div class="col-md-4 col-xs-6">
+                <svg id="total_usage" width="97%" height="100%"></svg>
+                <p align="center">Storage Percentage Usage</p>	       
+		        <div class="row" id="pg-items"><i class="fa fa-hdd-o"></i> Total Storage 
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {% widthratio cephstatus.output.pgmap.bytes_total 1048576 1  %} MB
+                    </span>
                 </div>
-            </div><!-- end of monitor status -->
-            <div class="col-md-4 col-xs-6">
-                <div id="total_usage"></div>
+                <div class="row" id="pg-items"><i class="fa fa-archive"></i>Used Storage 
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {% widthratio cephstatus.output.pgmap.bytes_used 1048576 1  %} MB
+                    </span>
+                </div>
+                <div class="row" id="pg-items"><i class="fa fa-hdd-o"></i> Available 
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {% widthratio cephstatus.output.pgmap.bytes_avail 1048576 1  %} MB
+                    </span>
+                </div>
+                <div class="row" id="pg-items"><i class="fa fa-file"></i> Data  
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {% widthratio cephstatus.output.pgmap.data_bytes 1048576 1  %} MB
+                    </span>
+                </div>
+                <div class="row" id="pg-items"><i class="fa fa-info" aria-hidden="true"></i> Total PG
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {{ cephstatus.output.pgmap.num_pgs  }}
+                </div>
+                <div class="row" id="pg-items"><i class="fa fa-info" aria-hidden="true"></i> Total Pools
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {{ cephstatus.output.pgmap.num_pools }}
+                </div>
+                <div class="row" id="pg-items"><i class="fa fa-info"></i> Total Objects
+                    <span style="font-size:medium;" class="label label-default pull-right">
+                        {{ cephstatus.output.pgmap.num_objects }}
+                </div>
             </div>
             <div id="ow-marketplace" class="col-sm-12 col-md-6">
 				<div id="ow-setting">
@@ -489,6 +520,30 @@
 <!--End Dashboard 2 -->
 <div style="height: 40px;"></div>
 <script type="text/javascript">
+
+/*var g;
+g = new JustGage({
+    id: "total_usage",
+    value: {% widthratio cephstatus.output.pgmap.bytes_used 1073741824 1 %},
+    min: 0,
+    max: {% widthratio cephstatus.output.pgmap.bytes_total 1073741824 1  %} ,
+    title: "Total Usage (GB)",
+    label: "(GB) Used"
+});
+*/
+var config1 = liquidFillGaugeDefaultSettings();
+var used = {{ cephstatus.output.pgmap.bytes_used }}
+var total = {{ cephstatus.output.pgmap.bytes_total }}
+percentage = (used/total) * 100;
+/*config1.circleColor = "#FF7777";
+config1.textColor = "#FF4444";
+config1.waveTextColor = "#FFAAAA";
+config1.waveColor = "#FFDDDD";
+config1.circleThickness = 0.2;
+config1.textVertPosition = 0.2;
+config1.waveAnimateTime = 1000;*/
+var gauge1 = loadLiquidFillGauge("total_usage", percentage,config1);
+
 // Array for random data for Sparkline
 var sparkline_arr_1 = SparklineTestData();
 var sparkline_arr_2 = SparklineTestData();
