@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load percentage %}
 <!--Start Breadcrumb-->
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
@@ -76,7 +77,7 @@
 	<div id="dashboard_links" class="col-xs-12 col-sm-2 pull-right">
 		<ul class="nav nav-pills nav-stacked">
 			<li class="active"><a href="#" class="tab-link" id="overview">Overview</a></li>
-			<li><a href="#" class="tab-link" id="clients">Clients</a></li>
+			<li><a href="#" class="tab-link" id="clients">Details</a></li>
 			<li><a href="#" class="tab-link" id="graph">Statistics</a></li>
 			<li><a href="#" class="tab-link" id="servers">Servers</a></li>
 		</ul>
@@ -85,7 +86,7 @@
 		<!--Start Dashboard Tab 1-->
 		<div id="dashboard-overview" class="row" style="visibility: visible; position: relative;">
             <div class="col-sm-12 col-md-8 col-xs-12" id="osd-status">
-                <div class="panel panel-default">
+                <div class="panel panel-default"><!-- begin of osd-status div -->
                     <div class="panel-heading">
                         <h3 class="panel-title">Ceph Cluster OSD Status</h3>
                     </div>
@@ -98,13 +99,13 @@
                                     <div class="panel-body"> {{ cephstatus.output.osdmap.osdmap.num_osds }}</div>
                                 </div>
                             </div>
-			                <div class="col-md-3 col-xs-6">
+		                    <div class="col-md-3 col-xs-6">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">In</div>
                                     <div class="panel-body">{{ cephstatus.output.osdmap.osdmap.num_in_osds  }} </div>
                                 </div>
                             </div>
-			                <div class="col-md-3 col-xs-6">
+		                    <div class="col-md-3 col-xs-6">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">UP</div>
                                     <div class="panel-body"> {{ cephstatus.output.osdmap.osdmap.num_up_osds  }}  </div>
@@ -112,16 +113,16 @@
                             </div>
                             <div class="col-md-3 col-xs-6">
                                 <div class="panel panel-danger">
-                                    <div class="panel-heading">Unhealthy</div>
+                                    <div class="panel-heading">Down</div>
                                     <div class="panel-body">
-                                    0
+                                        0
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div><!-- end of osd-status div -->
-		<div class="panel panel-default"><!-- begin of monitor status -->
+		        <div class="panel panel-default"><!-- begin of monitor status -->
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Ceph Cluster Monitors status
@@ -163,11 +164,11 @@
                         {% widthratio cephstatus.output.pgmap.data_bytes 1048576 1  %} MB
                     </span>
                 </div>
-                <div class="row" id="pg-items"><i class="fa fa-info" aria-hidden="true"></i> Total PG
+                <div class="row" id="pg-items"><i class="fa fa-object-ungroup" aria-hidden="true"></i> Total PG
                     <span style="font-size:medium;" class="label label-default pull-right">
                         {{ cephstatus.output.pgmap.num_pgs  }}
                 </div>
-                <div class="row" id="pg-items"><i class="fa fa-info" aria-hidden="true"></i> Total Pools
+                <div class="row" id="pg-items"><i class="fa fa-object-group" aria-hidden="true"></i> Total Pools
                     <span style="font-size:medium;" class="label label-default pull-right">
                         {{ cephstatus.output.pgmap.num_pools }}
                 </div>
@@ -176,7 +177,7 @@
                         {{ cephstatus.output.pgmap.num_objects }}
                 </div>
             </div>
-            <div id="ow-marketplace" class="col-sm-12 col-md-6">
+          <!--  <div id="ow-marketplace" class="col-sm-12 col-md-6">
 				<div id="ow-setting">
 					<a href="#"><i class="fa fa-folder-open"></i></a>
 					<a href="#"><i class="fa fa-credit-card"></i></a>
@@ -309,73 +310,43 @@
 						</div>
 					</div>
 				</div>
-			</div>
+            </div> -->
 		</div>
 		<!--End Dashboard Tab 1-->
 		<!--Start Dashboard Tab 2-->
 		<div id="dashboard-clients" class="row" style="visibility: hidden; position: absolute;">
 			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-users"></i></div>
-				<div class="col-xs-2"><b>Country</b></div>
-				<div class="col-xs-2">Visitors</div>
-				<div class="col-xs-2">Page hits</div>
-				<div class="col-xs-2">Revenue</div>
-				<div class="col-xs-1">Activity</div>
-				<div class="col-xs-2">Date</div>
+				<div class="col-xs-1"><i class="fa fa-object-group"></i></div>
+				<div class="col-xs-2"><b>Pools</b></div>
+				<div class="col-xs-1">ID</div>
+				<div class="col-xs-2">USED(MB)</div>
+				<div class="col-xs-2">%USED</div>
+				<div class="col-xs-2">MAX AVAIL(MB)</div>
+				<div class="col-xs-2">OBJECTS</div>
 			</div>
+			{% for pool in pool_usage.output.pools %}
+				<div class="row one-list-message">
+					<div class="col-xs-1"><i class="fa fa-object-ungroup"></i></div>
+					<div class="col-xs-2"><b>{{ pool.name  }}</b></div>
+					<div class="col-xs-1">{{ pool.id }}</div>
+					<div class="col-xs-2">{% widthratio pool.stats.kb_used 1024 1 %}</div>
+					<div class="col-xs-2">
+						{{ pool.stats.bytes_used|percentage:pool.stats.max_avail }}</div>
+					<div class="col-xs-2">{% widthratio pool.stats.max_avail 1048576 1 %}</div>
+					<div class="col-xs-2">{{ pool.stats.objects }}</div>
+				</div>
+			{% endfor %}
 			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-user"></i></div>
-				<div class="col-xs-2"><b>USA</b></div>
-				<div class="col-xs-2">109455</div>
-				<div class="col-xs-2">54322344</div>
-				<div class="col-xs-2"><i class="fa fa-usd"></i> 354563</div>
-				<div class="col-xs-1"><span class="bar"></span></div>
-				<div class="col-xs-2 message-date">12/31/13</div>
-			</div>
-			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-user"></i></div>
-				<div class="col-xs-2"><b>U.K.</b></div>
-				<div class="col-xs-2">86549</div>
-				<div class="col-xs-2">43242344</div>
-				<div class="col-xs-2"><i class="fa fa-usd"></i> 265563</div>
-				<div class="col-xs-1"><span class="bar"></span></div>
-				<div class="col-xs-2 message-date">12/25/13</div>
-			</div>
-			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-user"></i></div>
-				<div class="col-xs-2"><b>FRANCE</b></div>
-				<div class="col-xs-2">79399</div>
-				<div class="col-xs-2">45376844</div>
-				<div class="col-xs-2"><i class="fa fa-usd"></i> 309456</div>
-				<div class="col-xs-1"><span class="bar"></span></div>
-				<div class="col-xs-2 message-date">12/30/13</div>
-			</div>
-			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-user"></i></div>
-				<div class="col-xs-2"><b>GERMANY</b></div>
-				<div class="col-xs-2">94567</div>
-				<div class="col-xs-2">35322344</div>
-				<div class="col-xs-2"><i class="fa fa-usd"></i> 301040</div>
-				<div class="col-xs-1"><span class="bar"></span></div>
-				<div class="col-xs-2 message-date">12/26/13</div>
-			</div>
-			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-user"></i></div>
-				<div class="col-xs-2"><b>CANADA</b></div>
-				<div class="col-xs-2">89525</div>
-				<div class="col-xs-2">1342344</div>
-				<div class="col-xs-2"><i class="fa fa-usd"></i> 298764</div>
-				<div class="col-xs-1"><span class="bar"></span></div>
-				<div class="col-xs-2 message-date">12/30/13</div>
-			</div>
-			<div class="row one-list-message">
-				<div class="col-xs-1"><i class="fa fa-user"></i></div>
-				<div class="col-xs-2"><b>CHINA</b></div>
-				<div class="col-xs-2">120865</div>
-				<div class="col-xs-2">43522344</div>
-				<div class="col-xs-2"><i class="fa fa-usd"></i> 776563</div>
-				<div class="col-xs-1"><span class="bar"></span></div>
-				<div class="col-xs-2 message-date">12/29/13</div>
+				<div class="col-xs-1"><i class="fa fa-hdd-o"></i></div>
+				<div class="col-xs-2"><b>Total</b></div>
+				<div class="col-xs-1">N/A</div>
+				<div class="col-xs-2"><b>{% widthratio pool_usage.output.stats.total_used_bytes 1048576 1 %}</b>
+				</div>
+				<div class="col-xs-2">
+				<b>{{ pool_usage.output.stats.total_used_bytes|percentage:pool_usage.output.stats.total_bytes }}</b>
+				</div>
+				<div class="col-xs-2"><b>{% widthratio pool_usage.output.stats.total_bytes 1048576 1 %}</b></div>
+				<div class="col-xs-2"><b>{{ cephstatus.output.pgmap.num_objects }}</b></div>
 			</div>
 		</div>
 		<!--End Dashboard Tab 2-->
@@ -389,6 +360,7 @@
 		<!--End Dashboard Tab 3-->
 		<!--Start Dashboard Tab 4-->
 		<div id="dashboard-servers" class="row" style="visibility: hidden; position: absolute;">
+			{{ osd_metadata }}
 			<div class="col-xs-12 col-sm-6 col-md-4 ow-server">
 				<h4 class="page-header text-right"><i class="fa fa-windows"></i>#SRV-APP</h4>
 				<small>Application server</small>
