@@ -1688,7 +1688,7 @@ function SparklineLoop(){
 //
 // Draw Morris charts on Dashboard (panel- Statistics + 3 donut)
 //
-function MorrisDashboard(){
+/*function MorrisDashboard(){
 	Morris.Line({
 		element: 'stat-graph',
 		data: [
@@ -1710,7 +1710,7 @@ function MorrisDashboard(){
 		ykeys: ['Win8', 'Win7','Vista','NT','XP', 'Linux', 'Mac', 'Mobile'],
 		labels: ['Win8', 'Win7','Vista','NT','XP', 'Linux', 'Mac', 'Mobile']
 	});
-	/*Morris.Donut({
+	Morris.Donut({
 		element: 'morris_donut_1',
 		data: [
 			{value: 70, label: 'pay', formatted: 'at least 70%' },
@@ -1740,8 +1740,8 @@ function MorrisDashboard(){
 			{value: 25, label: 'year', formatted: 'this year' }
 		],
 		formatter: function (x, data) { return data.formatted; }
-	});*/
-}
+	});
+}*/
 //
 // Draw SparkLine example Charts for Dashboard (table- Tickers)
 //

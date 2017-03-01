@@ -31,18 +31,21 @@ def ajax_dashboard(request):
     response,report = wrapper.report(body='json')
     response, pool_usage = wrapper.df(body='json')
     response,osd_metadata = wrapper.osd_metadata(body='json')
-    reponse,nodelist  = wrapper.node_ls(body='json')
+    reponse,mon_metadata = wrapper.mon_metadata(body='json')
+    response,osd_performance = wrapper.osd_perf(body='json')
 
     template = loader.get_template('dynamic/dashboard.html')
 
     osd_metadata = cephserviceutility.format_json(osd_metadata)
+    mon_metadata = cephserviceutility.format_json(mon_metadata)
+    osd_performance = cephserviceutility.data_format_for_bar_chart(osd_performance)
     context = {
         'cephstatus':status,
         'report':report,
         'pool_usage':pool_usage,
         'osd_metadata':osd_metadata,
-        'nodelist':nodelist
-
+        'mon_metadata':mon_metadata,
+        'osd_perf':osd_performance
     }
     output = template.render(context,request)
     return HttpResponse(output)
