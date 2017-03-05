@@ -149,25 +149,95 @@
 		<div id="sidebar-left" class="col-xs-2 col-sm-2">
 			<ul class="nav main-menu">
 				<li>
-					<a href="{% static '/ajax/dashboard.html' %}" class="active ajax-link">
+					<a href="{% url 'ajax_dashboard' %}" class="active ajax-link">
 						<i class="fa fa-dashboard"></i>
 						<span class="hidden-xs">Dashboard</span>
 					</a>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Charts</span>
+						<i class="fa fa-hdd-o"></i>
+						<span class="hidden-xs">OSD</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
-						<li><a class="ajax-link" href="ajax/charts_flot.html">Flot Charts</a></li>
-						<li><a class="ajax-link" href="ajax/charts_google.html">Google Charts</a></li>
-						<li><a class="ajax-link" href="ajax/charts_morris.html">Morris Charts</a></li>
-						<li><a class="ajax-link" href="ajax/charts_coindesk.html">CoinDesk realtime</a></li>
+						<li><a class="ajax-link" href="{% url 'ceph_osd_tree' %}">osd tree</a></li>
+						<li><a class="ajax-link" href="{% url 'ceph_osd_utilization' %}">Utilization</a></li>
+						<li><a class="ajax-link" href="{% url 'ceph_osd_dumps' %}">OSD Dump</a></li>
+						<li><a class="ajax-link" href="{% url 'ceph_osd_search' %}">Find OSD</a></li>
+						<li><a class="ajax-link" href="{% url 'ceph_osd_path' %}">OSD Directory</a></li>
+						<li><a class="ajax-link" href="{% url 'ceph_osd_ips' %}">OSD IP's</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-tree"></i>
+						<span class="hidden-xs">CRUSH</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="">Profiles</a></li>
+						<li><a class="ajax-link" href="">Rules</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-eye"></i>
+						<span class="hidden-xs">MONs</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="{% url 'mon_metadata' %}">Metadata</a></li>
+						<li><a class="ajax-link" href="{% url 'mon_quorum' %}">Quorum</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-object-group"></i>
+						<span class="hidden-xs">POOLS</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="">List</a></li>
+						<li><a class="ajax-link" href="">Stats</a></li>
+						<li><a class="ajax-link" href="">Details</a></li>
+						<li><a class="ajax-link" href="">Parameters</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-object-ungroup"></i>
+						<span class="hidden-xs">Placement Groups</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="">Full PG stats</a></li>
+						<li><a class="ajax-link" href="">List PG on OSD</a></li>
+						<li><a class="ajax-link" href="">adasd</a></li>
+						<li><a class="ajax-link" href="">asdasd</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-users"></i>
+						<span class="hidden-xs">Users</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="">option 1</a></li>
+						<li><a class="ajax-link" href="">option 2</a></li>
+						<li><a class="ajax-link" href="">option 3</a></li>
+						<li><a class="ajax-link" href="">option 4</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-hdd-o"></i>
+						<span class="hidden-xs">Others</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="">option 1</a></li>
+						<li><a class="ajax-link" href="">option 2</a></li>
+						<li><a class="ajax-link" href="">option 3</a></li>
+						<li><a class="ajax-link" href="">option 4</a></li>
+					</ul>
+				</li>
+				
+				<!-- <li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-table"></i>
 						 <span class="hidden-xs">Tables</span>
@@ -313,7 +383,7 @@
 							 </ul>
 						 </li>
 					 </ul>
-				 </li>
+				 </li> -->
 			</ul>
 		</div>
 		<!--Start Content-->
@@ -336,8 +406,6 @@
 <script src="{% static "plugins/justified-gallery/jquery.justifiedgallery.min.js" %}"></script>
 <script src="{% static "plugins/tinymce/tinymce.min.js" %}"></script>
 <script src="{% static "plugins/tinymce/jquery.tinymce.min.js" %}"></script>
-<script src="{% static "plugins/justgage/justgage.js" %}"></script>
-<script src="{% static "plugins/justgage/raphael-2.1.4.min.js" %}"></script>
 <script src="{% static "plugins/d3/d3.v3.js" %}"></script>
 <script src="{% static "js/liquidFillGauge.js" %}"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

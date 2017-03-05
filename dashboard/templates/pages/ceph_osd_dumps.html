@@ -1,0 +1,111 @@
+{% load staticfiles %}
+{% load percentage %}
+{% load bytes_to_humanize %}
+{% load kbytes_to_humanize %}
+{% load float_format %}
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >OSD</a></li>
+			<li><a href="#">OSD Dump</a></li>
+		</ol>
+	</div>
+</div>
+<div id="dashboard-header" class="row">
+	<div class="col-xs-12">
+		<h4>Epoch: {{ osd_dump.output.epoch }}  </h4>
+		<h4>Created: {{ osd_dump.output.created }}  </h4>
+		<h4>Modified: {{ osd_dump.output.modified }}  </h4>
+		<h4>Flags: {{ osd_dump.output.flags }}  </h4>
+		<h5>Cluster ID: {{ osd_dump.output.fsid }} </h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>CEPH OSD Dump</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content no-padding">
+				<table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-3">
+					<thead>
+						<tr>
+							<th>OSD ID</th>
+							<th>UP-IN</th>
+							<th>Up From</th>
+							<th>Up thru</th>
+							<th>Down at</th>
+							<th>last_clean_interval</th>
+							<th>state</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for node in osd_dump.output.osds %}
+							<tr>
+								<td>osd.{{ node.osd }}</td>
+								<td>{{ node.up }}-{{ node.in }}</td>
+								<td>{{ node.up_from }}</td>
+								<td>{{ node.up_thru }} </td>
+								<td>{{ node.down_at }} </td>
+								<td>[ {{ node.last_clean_begin }},{{ node.last_clean_end }} ) </td>
+								<td>
+									{% for status in node.state %}
+										{{ status }}{% if not forloop.last%},{%endif%}
+									{% endfor %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>OSD ID</th>
+							<th>UP-IN</th>
+							<th>Up From</th>
+							<th>Up thru</th>
+							<th>Down at</th>
+							<th>last_clean_interval</th>
+							<th>state</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+	TestTable3();
+	LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+	$('select').select2();
+	$('.dataTables_filter').each(function(){
+		$(this).find('label input[type=text]').attr('placeholder', 'Search');
+	});
+}
+$(document).ready(function() {
+	// Load Datatables and run plugin on tables 
+	LoadDataTablesScripts(AllTables);
+	// Add Drag-n-Drop feature
+	//WinMove();
+});
+</script>
+
+

@@ -62,7 +62,7 @@ function LoadTimePickerScript(callback){
 //
 function LoadBootstrapValidatorScript(callback){
 	if (!$.fn.bootstrapValidator){
-		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
+		$.getScript('static/plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
 	}
 	else {
 		if (callback && typeof(callback) === "function") {
@@ -76,7 +76,7 @@ function LoadBootstrapValidatorScript(callback){
 //
 function LoadSelect2Script(callback){
 	if (!$.fn.select2){
-		$.getScript('plugins/select2/select2.min.js', callback);
+		$.getScript('static/plugins/select2/select2.min.js', callback);
 	}
 	else {
 		if (callback && typeof(callback) === "function") {
@@ -90,10 +90,10 @@ function LoadSelect2Script(callback){
 //
 function LoadDataTablesScripts(callback){
 	function LoadDatatables(){
-		$.getScript('plugins/datatables/jquery.dataTables.js', function(){
-			$.getScript('plugins/datatables/ZeroClipboard.js', function(){
-				$.getScript('plugins/datatables/TableTools.js', function(){
-					$.getScript('plugins/datatables/dataTables.bootstrap.js', callback);
+		$.getScript('static/plugins/datatables/jquery.dataTables.js', function(){
+			$.getScript('static/plugins/datatables/ZeroClipboard.js', function(){
+				$.getScript('static/plugins/datatables/TableTools.js', function(){
+					$.getScript('static/plugins/datatables/dataTables.bootstrap.js', callback);
 				});
 			});
 		});
@@ -1621,7 +1621,7 @@ function TestTable3(){
 			"sLengthMenu": '_MENU_'
 		},
 		"oTableTools": {
-			"sSwfPath": "plugins/datatables/copy_csv_xls_pdf.swf",
+			"sSwfPath": "static/plugins/datatables/copy_csv_xls_pdf.swf",
 			"aButtons": [
 				"copy",
 				"print",
@@ -1876,6 +1876,20 @@ function displayFlickrImages(data){
 //
 // Example form validator function
 //
+function OsdSearchFormValidator(){
+	$('#osd_search_form').bootstrapValidator({
+		message: 'This value is not valid',
+		fields:{
+			osd_selection: {
+				validators: {
+					notEmpty: {
+						message: 'OSD name is required and can\'t be empty'
+					}
+				}
+			}
+		}
+	});
+}
 function DemoFormValidator(){
 	$('#defaultForm').bootstrapValidator({
 		message: 'This value is not valid',
@@ -2300,9 +2314,10 @@ $(document).ready(function () {
 	});
 	var ajax_url = location.hash.replace(/^#/, '');
 	if (ajax_url.length < 1) {
-		ajax_url = '/ajax/dashboard';
+		ajax_url = 'dashboard/home/';
 	}
-	LoadAjaxContent(ajax_url);
+	//LoadAjaxContent(ajax_url);
+	setInterval(LoadAjaxContent(ajax_url),5000);
 	$('.main-menu').on('click', 'a', function (e) {
 		var parents = $(this).parents('li');
 		var li = $(this).closest('li.dropdown');

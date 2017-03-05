@@ -1,0 +1,53 @@
+
+<div class='panel panel-primary'>
+	<div class='panel-heading'>
+		<div class='panel-title'>
+			OSD Information
+		</div>
+	</div>
+	<div class='panel-body'>
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+
+				{% if osd_searched.status == "OK" %}
+					<div class="row" style="margin: 5px;"><i class="fa fa-link"></i> IP 
+	                    <span style="font-size:medium;" class="label label-default pull-right">
+	                        {{ osd_searched.output.ip }}
+	                    </span>
+                	</div>
+                	<div class="row" style="margin: 5px;"><i class="fa fa-hdd-o"></i> OSD ID 
+	                    <span style="font-size:medium;" class="label label-default pull-right">
+	                        {{ osd_searched.output.osd }}
+	                    </span>
+                	</div>
+                	<div class="row" style="margin: 5px;"><i class="fa fa-home"></i> Host 
+	                    <span style="font-size:medium;" class="label label-default pull-right">
+	                        {{ osd_searched.output.crush_location.host }}
+	                    </span>
+                	</div>
+                	<div class="row" style="margin: 5px;"><i class="fa fa-tree"></i> Host 
+	                    <span style="font-size:medium;" class="label label-default pull-right">
+	                        {{ osd_searched.output.crush_location.root }}
+	                    </span>
+                	</div>
+				{% else %}
+					{{ osd_searched.status }}
+				{% endif %}
+			</div>
+			<div class="col-md-6 col-xs-12">
+				<b>Metadata</b>
+				{% if osd_metadata.status == "OK" %}
+					{% for key,value in osd_metadata.output.items %}
+						<div class="row" id="pg-items"></i> {{ key }} 
+		                    <span class="label label-default pull-right">
+		                        {{ value }}
+		                    </span>
+                		</div>
+					{% endfor %}
+				{% else %}
+					{{ osd_metadata.status }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

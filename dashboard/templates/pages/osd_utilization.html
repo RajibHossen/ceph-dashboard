@@ -1,0 +1,217 @@
+{% load staticfiles %}
+{% load percentage %}
+{% load bytes_to_humanize %}
+{% load kbytes_to_humanize %}
+{% load float_format %}
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >OSD</a></li>
+			<li><a href="#">Utilization</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>OSD Statistics</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+			</div>
+			<div class="box-content no-padding">
+				<div class="row">
+					<div class="col-md-6 col-xs-12">
+						<div class="panel panel-primary" style="margin: 10px;">
+							<div class="panel-heading">
+								Ceph OSD PG distribution Statistics
+							</div>
+							<div class="panel-body">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-success">Standard Deviation 
+										<span class="badge" style="font-size:medium;"> 
+										{{ osd_utilization.output.std_dev|float_format }}</span>
+									</li>
+									<li class="list-group-item list-group-item-info">Expected baseline STD 
+										<span class="badge" style="font-size:medium;"> 
+											{{ osd_utilization.output.expected_baseline_std_dev|float_format }}
+										</span>
+									</li>
+								    <li class="list-group-item list-group-item-success">Average PGS 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_utilization.output.avg_pgs|float_format }} </span>
+								    </li>
+								    <li class="list-group-item list-group-item-info">OSD ID of Max PGS 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_utilization.output.max_osd }}</span>
+								    </li>
+								    <li class="list-group-item list-group-item-success">OSD ID of Min PGS 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_utilization.output.min_osd }}</span>
+								    </li>
+								    <li class="list-group-item list-group-item-info">Max OSD PGS 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_utilization.output.max_osd_pgs }}</span>
+								    </li>
+								    <li class="list-group-item list-group-item-success">Min OSD PGS 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_utilization.output.min_osd_pgs }}</span>
+								    </li>
+								</ul>
+							</div>
+						</div>
+						
+						<!-- <div class="row" id="pg-items"><i class="fa fa-hdd-o"></i> Standard Deviation 
+		                    <span style="font-size:medium;" class="label label-default pull-right">
+		                        {{ osd_utilization.output.std_dev|float_format }}
+		                    </span>
+	                	</div> -->
+					</div>
+					<div class="col-md-6 col-xs-12">
+						<div class="panel panel-primary" style="margin: 10px;">
+							<div class="panel-heading">
+								Ceph OSD Utilization Statistics
+							</div>
+							<div class="panel-body">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-success">
+										Average Utilization 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_df.output.summary.average_utilization|float_format }} </span>
+								    </li>
+									<li class="list-group-item list-group-item-info">Standard Deviation 
+										<span class="badge" style="font-size:medium;"> 
+										{{ osd_df.output.summary.dev|float_format }}</span>
+									</li>
+								    <li class="list-group-item list-group-item-success">Maximum Variance 
+								    	<span class="badge" style="font-size:medium;"> 
+								    	{{ osd_df.output.summary.max_var|float_format }} </span>
+								    </li>
+								    <li class="list-group-item list-group-item-info">Minimum Variance 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_df.output.summary.min_var|float_format }} </span>
+								    </li>
+								    <li class="list-group-item list-group-item-success">Used Storage
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_df.output.summary.total_kb_used|kbytes_to_humanize }} </span>
+								    </li>
+								    <li class="list-group-item list-group-item-info">Available Storage
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_df.output.summary.total_kb_avail|kbytes_to_humanize }}</span>
+								    </li>
+								    <li class="list-group-item list-group-item-success">Total Storage 
+								    	<span class="badge" style="font-size:medium;">
+								    	{{ osd_df.output.summary.total_kb|kbytes_to_humanize }} </span>
+								    </li>
+								</ul>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>CEPH OSD Usage</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content no-padding">
+				<table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-3">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Weight</th>
+							<th>Reweight</th>
+							<th>Size</th>
+							<th>Use</th>
+							<th>Avail</th>
+							<th>%USE</th>
+							<th>VAR</th>
+							<th>PGS</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for node in osd_df.output.nodes %}
+							<tr>
+								<td>{{ node.name }}</td>
+								<td>{{ node.crush_weight }}</td>
+								<td>{{ node.reweight }}</td>
+								<td>{{ node.kb|kbytes_to_humanize }} </td>
+								<td>{{ node.kb_used|kbytes_to_humanize }} </td>
+								<td>{{ node.kb_avail|kbytes_to_humanize }}</td>
+								<td>{{ node.utilization|float_format }}</td>
+								<td>{{ node.var|float_format }}</td>
+								<td>{{ node.pgs }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Name</th>
+							<th>Weight</th>
+							<th>Reweight</th>
+							<th>Size</th>
+							<th>Use</th>
+							<th>Avail</th>
+							<th>%USE</th>
+							<th>VAR</th>
+							<th>PGS</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+	TestTable3();
+	LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+	$('select').select2();
+	$('.dataTables_filter').each(function(){
+		$(this).find('label input[type=text]').attr('placeholder', 'Search');
+	});
+}
+$(document).ready(function() {
+	// Load Datatables and run plugin on tables 
+	LoadDataTablesScripts(AllTables);
+	// Add Drag-n-Drop feature
+	//WinMove();
+});
+</script>

@@ -1,0 +1,84 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >OSD</a></li>
+			<li><a href="#">Find OSD</a></li>
+		</ol>
+	</div>
+</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<div class="panel-title">
+			Find OSD from CLUSTER
+		</div>
+	</div>
+	<div class="panel-body">
+		<form id="osd_search_form" method="post" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">OSD</label>
+				<div class="col-sm-5">
+					<select class="populate placeholder" name="osd_selection" id="osd_find">
+						<option value="">-- Select an OSD --</option>
+						{% for osd in osd_list.output %}
+							<option value="{{ osd }}">OSD.{{ osd }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="osd_search_result">
+</div>
+<script type="text/javascript">
+function DemoSelect2(){
+	$('#osd_find').select2();
+}
+function create_post() {
+    console.log("create post is working!") // sanity check
+    $.ajax({
+    	mimeType: 'text/html; charset=utf-8',
+        url : "osd/search/", 
+        type : "POST", 
+        data : {
+        	osd_id: $('#osd_find').val(), 
+        	csrfmiddlewaretoken: '{{ csrf_token }}'
+    	},
+
+        // handle a successful response
+        success : function(data) {
+        	//var obj = jQuery.parseJSON( data );
+            $('#osd_search_result').html(data);
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#osd_search_result').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        },
+        dataType: "html"
+    });
+};
+$(document).ready(function() {
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(OsdSearchFormValidator);
+
+	$('#osd_search_form').on('submit', function(event){
+	    event.preventDefault();
+	    console.log("form submitted!")  // sanity check
+	    create_post();
+	});
+});
+
+</script>

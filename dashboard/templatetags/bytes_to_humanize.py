@@ -3,8 +3,8 @@ from django import template
 register = template.Library()
 
 @register.filter(name='bytes_to_humanize')
-def percentage(bytes):
+def bytes_to_humanize(bytes):
     try:
-        return "%.2f" % (float(bytes) / float(1024*1024)) #convert bytes to MB
+        return str("%.2f" % (float(bytes) / float(1024*1024))) + ' MB' #convert bytes to MB
     except ValueError:
         return ''

@@ -22,4 +22,11 @@ def data_format_for_bar_chart(data):
 		output.append(osd_item)
 	return output
 
+def build_tree_from_list(osd_tree):
+	tree_nodes = []
+	osd_tree_duplicate = osd_tree
+
+	for node in osd_tree_duplicate['output']['nodes']:
+		pass
+
 

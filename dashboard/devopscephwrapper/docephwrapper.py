@@ -420,6 +420,15 @@ class CephWrapper(client.CephClient):
         else:
             return self.get('osd/metadata',**kwargs)
 
+    def osd_df(self,output_method=None,**kwargs):
+        if output_method is not None:
+            return self.get('osd/df?output_method={0}'.format(output_method),**kwargs)
+        else:
+            return self.get('osd/df',**kwargs)
+
+    def osd_utilization(self,**kwargs):
+        return self.get('osd/utilization',**kwargs)
+
 
     ###
     # osd PUT calls
