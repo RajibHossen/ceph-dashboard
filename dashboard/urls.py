@@ -12,5 +12,9 @@ urlpatterns = [
     url(r'^osd/dir/$',views.ceph_osd_path,name='ceph_osd_path'),
     url(r'^osd/ip/$',views.ceph_osd_ips,name='ceph_osd_ips'),
     url(r'^mon/quorum/$',views.mon_quorum,name='mon_quorum'),
-    url(r'^mon/metadata/$',views.mon_metadata,name='mon_metadata')
+    url(r'^mon/metadata/$',views.mon_metadata,name='mon_metadata'),
+    url(r'^osd/crush/profiles/$',views.crush_profile,name='crush_profile'),
+    url(r'^osd/crush/rules/$',views.crush_rules,name='crush_rules'),
+    url(r'^osd/crush/buckets/$',views.crush_buckets,name='crush_buckets'),
+    url(r'^osd/crush/devices/$',views.crush_devices,name='crush_devices')
 ]

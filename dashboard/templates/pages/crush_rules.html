@@ -1,0 +1,59 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >CRUSH</a></li>
+			<li><a href="#">Profiles</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>OSD CRUSH Rules</span>
+				</div>
+			</div>
+			<div class="box-content no-padding">
+				<div class="row">
+					{% for rule in crush_rules.output %}
+					<div class="col-md-4 col-xs-6">
+						<div class="list-group" style="margin-top: 5px;">
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">rule name: {{rule.rule_name }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">rule set: {{rule.ruleset }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">type: 
+								    	{% if rule.type == 1 %}
+								    		replicated
+								    	{% else %}
+								    		erasure code
+								    	{%endif%} 
+								    </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">min_size: {{rule.min_size }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">max_size: {{rule.max_size }} </b>
+								</li>
+								{% for step in rule.steps %}
+									<li class="list-group-item terminal_style" >
+									    <b class="text_style"> step {{step.op }} {{step.item_name}}{{step.num}}
+									    	{%if step.type %}type {{step.type}}{%endif%}
+									    </b>
+									</li>
+								{%endfor%}	
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

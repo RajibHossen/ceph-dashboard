@@ -340,6 +340,9 @@ class CephWrapper(client.CephClient):
     def osd_crush_rule_ls(self, **kwargs):
         return self.get('osd/crush/rule/ls', **kwargs)
 
+    def osd_crush_show_tunables(self,**kwargs):
+        return self.get('osd/crush/show-tunables',**kwargs)
+
     def osd_dump(self, epoch=None, **kwargs):
         if epoch is not None:
             return self.get('osd/dump?epoch={0}'

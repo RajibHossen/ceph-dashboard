@@ -40,34 +40,41 @@
 								Ceph OSD PG distribution Statistics
 							</div>
 							<div class="panel-body">
-								<ul class="list-group">
-									<li class="list-group-item list-group-item-success">Standard Deviation 
-										<span class="badge" style="font-size:medium;"> 
+								<ul class="list-group ">
+									<li class="list-group-item terminal_style">
+										<b class="text_style">Standard Deviation</b>
+										<span class="badge badge_style" > 
 										{{ osd_utilization.output.std_dev|float_format }}</span>
 									</li>
-									<li class="list-group-item list-group-item-info">Expected baseline STD 
-										<span class="badge" style="font-size:medium;"> 
-											{{ osd_utilization.output.expected_baseline_std_dev|float_format }}
+									<li class="list-group-item terminal_style">
+										<b class="text_style">Expected baseline STD </b>
+										<span class="badge badge_style" > 
+										{{ osd_utilization.output.expected_baseline_std_dev|float_format }}
 										</span>
 									</li>
-								    <li class="list-group-item list-group-item-success">Average PGS 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    	<b class="text_style">Average PGS </b>
+								    	<span class="badge badge_style" >
 								    	{{ osd_utilization.output.avg_pgs|float_format }} </span>
 								    </li>
-								    <li class="list-group-item list-group-item-info">OSD ID of Max PGS 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    	<b class="text_style">OSD ID of Max PGS </b>
+								    	<span class="badge badge_style" >
 								    	{{ osd_utilization.output.max_osd }}</span>
 								    </li>
-								    <li class="list-group-item list-group-item-success">OSD ID of Min PGS 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								   	 	<b class="text_style">OSD ID of Min PGS </b>
+								    	<span class="badge badge_style" >
 								    	{{ osd_utilization.output.min_osd }}</span>
 								    </li>
-								    <li class="list-group-item list-group-item-info">Max OSD PGS 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								   	 	<b class="text_style">Max OSD PGS </b>
+								    	<span class="badge badge_style" >
 								    	{{ osd_utilization.output.max_osd_pgs }}</span>
 								    </li>
-								    <li class="list-group-item list-group-item-success">Min OSD PGS 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    	<b class="text_style">Min OSD PGS </b>
+								    	<span class="badge badge_style" >
 								    	{{ osd_utilization.output.min_osd_pgs }}</span>
 								    </li>
 								</ul>
@@ -87,33 +94,39 @@
 							</div>
 							<div class="panel-body">
 								<ul class="list-group">
-									<li class="list-group-item list-group-item-success">
-										Average Utilization 
-								    	<span class="badge" style="font-size:medium;">
+									<li class="list-group-item terminal_style">
+										<b class="text_style">Average Utilization  </b>
+								    	<span class="badge badge_style" style="font-size:medium;">
 								    	{{ osd_df.output.summary.average_utilization|float_format }} </span>
 								    </li>
-									<li class="list-group-item list-group-item-info">Standard Deviation 
-										<span class="badge" style="font-size:medium;"> 
+									<li class="list-group-item terminal_style">
+									<b class="text_style">Standard Deviation  </b>
+										<span class="badge badge_style" style="font-size:medium;"> 
 										{{ osd_df.output.summary.dev|float_format }}</span>
 									</li>
-								    <li class="list-group-item list-group-item-success">Maximum Variance 
-								    	<span class="badge" style="font-size:medium;"> 
+								    <li class="list-group-item terminal_style">
+								    <b class="text_style">Maximum Variance  </b>
+								    	<span class="badge badge_style" style="font-size:medium;"> 
 								    	{{ osd_df.output.summary.max_var|float_format }} </span>
 								    </li>
-								    <li class="list-group-item list-group-item-info">Minimum Variance 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    <b class="text_style">Minimum Variance  </b>
+								    	<span class="badge badge_style" style="font-size:medium;">
 								    	{{ osd_df.output.summary.min_var|float_format }} </span>
 								    </li>
-								    <li class="list-group-item list-group-item-success">Used Storage
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    <b class="text_style">Used Storage </b>
+								    	<span class="badge badge_style" style="font-size:medium;">
 								    	{{ osd_df.output.summary.total_kb_used|kbytes_to_humanize }} </span>
 								    </li>
-								    <li class="list-group-item list-group-item-info">Available Storage
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    <b class="text_style">Available Storage </b>
+								    	<span class="badge badge_style" style="font-size:medium;">
 								    	{{ osd_df.output.summary.total_kb_avail|kbytes_to_humanize }}</span>
 								    </li>
-								    <li class="list-group-item list-group-item-success">Total Storage 
-								    	<span class="badge" style="font-size:medium;">
+								    <li class="list-group-item terminal_style">
+								    <b class="text_style">Total Storage  </b>
+								    	<span class="badge badge_style" style="font-size:medium;">
 								    	{{ osd_df.output.summary.total_kb|kbytes_to_humanize }} </span>
 								    </li>
 								</ul>

@@ -150,6 +150,39 @@ def mon_metadata(request):
 
     return HttpResponse(template.render(context,request))
 
+def crush_profile(request):
+
+    response,profile = wrapper.osd_crush_show_tunables(body='json')
+    context={
+        'crush_profile':profile
+    }
+    template = loader.get_template('pages/crush_profile.html')
+    return HttpResponse(template.render(context,request))
+
+def crush_rules(request):
+    response,rules = wrapper.osd_crush_rule_dump(body='json')
+    context={
+        'crush_rules':rules
+    }
+    template = loader.get_template('pages/crush_rules.html')
+    return HttpResponse(template.render(context,request))
+
+def crush_buckets(request):
+    response,dump = wrapper.osd_crush_dump(body='json')
+    context={
+        'dump':dump
+    }
+    template = loader.get_template('pages/crush_buckets.html')
+    return HttpResponse(template.render(context,request))
+
+def crush_devices(request):
+    response,dump = wrapper.osd_crush_dump(body='json')
+    context={
+        'dump':dump
+    }
+    template = loader.get_template('pages/crush_devices.html')
+    return HttpResponse(template.render(context,request))
+
 #def login_user(request):
 #    username = request.POST['username']
 #    password = request.POST['password']

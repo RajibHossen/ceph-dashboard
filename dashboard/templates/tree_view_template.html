@@ -1,6 +1,14 @@
-<li> {{ node.name }}
+<li >
+	{{ node.id }} &nbsp;&nbsp;  
+	{{node.crush_weight}} &nbsp;&nbsp;  
+	{{ node.type }} &nbsp;&nbsp; 
+	{{ node.name }} &nbsp;&nbsp;  
+	{{ node.status }}  &nbsp;&nbsp; 
+	{{ node.reweight }} &nbsp;&nbsp; 
+	{{ node.primary_affinity }}
+	
     {%if node.children %}
-        <ul>
+        <ul style="list-style: none;">
          {%for ch in node.children %}
               {%with node=ch template_name="tree_view_template.html" %}
                    {%include template_name%}

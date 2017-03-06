@@ -8,11 +8,31 @@
 		</ol>
 	</div>
 </div>
-<h1>CEPH OSD TREE</h1>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>CEPH OSD TREE</span>
+				</div>
+			</div>
+			<div class="box-content no-padding">
+				    <span style="margin: 20px;">ID</span>
+				    <span style="margin: 20px;">WEIGHT</span>
+				    <span style="margin: 20px;"> TYPE</span>
+				    <span style="margin: 20px;">NAME</span>
+				    <span style="margin: 20px;">UP/DOWN</span>
+				    <span style="margin: 20px;">REWEIGHT</span>
+				    <span style="margin: 20px;">PRIMARY-AFFINITY</span>
+				<ul style="list-style: none;">
+					{% for node in osd_tree.root %} 
+					    {% include "tree_view_template.html" %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
 
-<ul>
-{% for node in osd_tree.output.nodes %} 
-    {% include "tree_view_template.html" %}
-{% endfor %}
-</ul>
-{{ osd_tree }}
+

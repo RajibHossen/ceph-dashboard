@@ -174,8 +174,10 @@
 						<span class="hidden-xs">CRUSH</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="">Profiles</a></li>
-						<li><a class="ajax-link" href="">Rules</a></li>
+						<li><a class="ajax-link" href="{% url 'crush_profile' %}">Profiles</a></li>
+						<li><a class="ajax-link" href="{% url 'crush_rules' %}">Rules</a></li>
+						<li><a class="ajax-link" href="{% url 'crush_buckets' %}">Crush Buckets</a></li>
+						<li><a class="ajax-link" href="{% url 'crush_devices' %}">Crush Devices</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

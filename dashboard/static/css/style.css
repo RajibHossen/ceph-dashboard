@@ -2376,3 +2376,18 @@ td.beauty-hover {
     margin-right:5px;
     margin-bottom:5px;
 }
+.indent{
+  padding-left: 1.8em;
+}
+.terminal_style{
+  background-color: #002B36;
+  color: #ffffff;
+}
+.badge_style{
+  font-size: medium;
+  font-family: monospace;
+  background-color: darkcyan;
+}
+.text_style{
+   font-family: monospace;
+}
