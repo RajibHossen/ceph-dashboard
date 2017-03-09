@@ -1,0 +1,126 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >Placement Groups</a></li>
+			<li><a href="#">Find PG by Primary OSD</a></li>
+		</ol>
+	</div>
+</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<div class="panel-title">
+			Find pg on specific OSD
+		</div>
+	</div>
+	<div class="panel-body">
+		<form id="pg_ls_by_primary_form" method="post" class="form-horizontal">
+		{% csrf_token %}
+			<div class="form-group">
+				<label class="col-sm-1 control-label">Primary OSD</label>
+				<div class="col-sm-3">
+					<select class="populate placeholder" name="pg_ls_by_primary_selection" id="pg_ls_by_primary_selection">
+						<option value="">-- Select an OSD --</option>
+						{% for osd in osd_ls.output %}
+							<option value="{{osd}}">osd.{{osd}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<label class="col-sm-1 control-label">Pool</label>
+				<div class="col-sm-3">
+					<select class="populate placeholder" name="pg_ls_by_pool_id" id="pg_ls_by_pool_id">
+						<option value="">-- Select a pool --</option>
+						{% for pool in pool_data.output %}
+							<option value="{{pool.pool_id}}">{{pool.pool_name}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<label class="col-sm-1 control-label">States</label>
+				<div class="col-sm-3">
+					<select class="populate placeholder" name="pg_ls_by_pool_stuck" 
+					id="pg_ls_by_pool_stuck">
+						<option value="">-- Select an option --</option>
+						<option value="active">active</option>
+						<option value="clean">clean</option>
+						<option value="down">down</option>
+						<option value="replay">replay</option>
+						<option value="scrubbing">scrubbing</option>
+						<option value="degraded">degraded</option>
+						<option value="inconsistent">inconsistent</option>
+						<option value="peering">peering</option>
+						<option value="repair">repair</option>
+						<option value="backfill_wait">backfill_wait</option>
+						<option value="incomplete">incomplete</option>
+						<option value="stale">stale</option>
+						<option value="deep_scrub">deep_scrub</option>
+						<option value="backfill">backfill</option>
+						<option value="backfill_toofull">backfill_toofull</option>
+						<option value="recovery_wait">recovery_wait</option>
+						<option value="undersized">undersized</option>
+						<option value="peered">peered</option>
+						<option value="activating">activating</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-sm-offset-8">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="pg_ls_by_primary_result">
+</div>
+<script type="text/javascript">
+function DemoSelect2(){
+	$('#pg_ls_by_primary_selection').select2();
+	$('#pg_ls_by_pool_id').select2();
+	$('#pg_ls_by_pool_stuck').select2();
+}
+function create_post() {
+	console.log($('#pg_ls_by_pool_id').val())
+	console.log($('#pg_ls_by_pool_stuck').val())
+    console.log("create post is working!") // sanity check
+    $.ajax({
+    	mimeType: 'text/html; charset=utf-8',
+        url : "pg/ls/by/primary/", 
+        type : "POST", 
+        data : {
+        	primary_osd: $('#pg_ls_by_primary_selection').val(),
+        	pool: $('#pg_ls_by_pool_id').val(),
+        	stuck: $('#pg_ls_by_pool_stuck').val(),
+        	csrfmiddlewaretoken: '{{ csrf_token }}'
+    	},
+
+        // handle a successful response
+        success : function(data) {
+        	//var obj = jQuery.parseJSON( data );
+            $('#pg_ls_by_primary_result').html(data);
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#pg_ls_by_primary_result').html("<div class='alert-box alert alert-danger' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        },
+        dataType: "html"
+    });
+};
+$(document).ready(function() {
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(PgLsByPrimaryValidator);
+
+	$('#pg_ls_by_primary_form').on('submit', function(event){
+	    event.preventDefault();
+	    console.log("form submitted!")  // sanity check
+	    create_post();
+	});
+});
+
+</script>

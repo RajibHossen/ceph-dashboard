@@ -1,0 +1,87 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >Placement Groups</a></li>
+			<li><a href="#">Dump Stucks</a></li>
+		</ol>
+	</div>
+</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<div class="panel-title">
+			Find stucks pg
+		</div>
+	</div>
+	<div class="panel-body">
+		<form id="pg_dump_stuck_form" method="post" class="form-horizontal">
+		{% csrf_token %}
+			<div class="form-group">
+				<label class="col-sm-3 control-label">PG Stuck Options</label>
+				<div class="col-sm-5">
+					<select class="populate placeholder" name="stuck_option_selection" id="pg_dump_stuck_find">
+						<option value="">-- Select an option --</option>
+						<option value="inactive">inactive</option>
+						<option value="unclean">unclean</option>
+						<option value="stale">stale</option>
+						<option value="undersized">undersized</option>
+						<option value="degraded">degraded</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="pg_search_result">
+</div>
+<script type="text/javascript">
+function DemoSelect2(){
+	$('#pg_dump_stuck_find').select2();
+}
+function create_post() {
+    console.log("create post is working!") // sanity check
+    $.ajax({
+    	mimeType: 'text/html; charset=utf-8',
+        url : "pg/dump/stuck/", 
+        type : "POST", 
+        data : {
+        	stuck_string: $('#pg_dump_stuck_find').val(),
+        	csrfmiddlewaretoken: '{{ csrf_token }}'
+    	},
+
+        // handle a successful response
+        success : function(data) {
+        	//var obj = jQuery.parseJSON( data );
+            $('#pg_search_result').html(data);
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#pg_search_result').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        },
+        dataType: "html"
+    });
+};
+$(document).ready(function() {
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(OsdSearchFormValidator);
+
+	$('#pg_dump_stuck_form').on('submit', function(event){
+	    event.preventDefault();
+	    console.log("form submitted!")  // sanity check
+	    create_post();
+	});
+});
+
+</script>

@@ -1,0 +1,92 @@
+Status: {{osd_pools.status}}
+<h3>Total pgs:{{osd_pools.output|length}}</h3>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>pool specific placement groups</span>
+				</div>
+				<div class="box-icons">
+					<!-- <a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a> -->
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content no-padding">
+				<table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-3">
+					<thead>
+						<tr>
+							<th>PG ID</th>
+							<th>State</th>
+							<th>Up primary</th>
+							<th>Acting primary</th>
+							<th>UP</th>
+							<th>Acting</th>
+							<th>last_became_active</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for pg in osd_pools.output %}
+							<tr>
+								<td>{{ pg.pgid }}</td>
+								<td>{{ pg.state }}</td>
+								<td>osd.{{ pg.up_primary }}</td>
+								<td>osd.{{ pg.acting_primary }} </td>
+								<td>{%for i in pg.up%}{{i}}
+									{%if not forloop.last%},{%endif%}
+									{%endfor%} </td>
+								<td>
+									{%for i in pg.acting%} 
+										{{i}}
+										{%if not forloop.last%},{%endif%}
+									{%endfor%}
+								</td>
+								<td>{{ pg.last_became_active }} </td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>PG ID</th>
+							<th>State</th>
+							<th>Up primary</th>
+							<th>Acting primary</th>
+							<th>UP</th>
+							<th>Acting</th>
+							<th>last_became_active</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+	TestTable3();
+	LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+	$('select').select2();
+	$('.dataTables_filter').each(function(){
+		$(this).find('label input[type=text]').attr('placeholder', 'Search');
+	});
+}
+$(document).ready(function() {
+	// Load Datatables and run plugin on tables 
+	LoadDataTablesScripts(AllTables);
+	// Add Drag-n-Drop feature
+	//WinMove();
+});
+</script>

@@ -1,0 +1,135 @@
+{% load staticfiles %}
+{% load percentage %}
+{% load bytes_to_humanize %}
+{% load kbytes_to_humanize %}
+{% load float_format %}
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >Mons</a></li>
+			<li><a href="#">Health</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>Mon Health Services Details</span>
+				</div>
+			</div>
+			<div class="box-content no-padding">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="list-group" style="margin-top: 5px;background-color:#F2F1F0;padding: 5px;">
+							<b class="text_style" style="display: block;">round_status: 
+								{{health.output.health.timechecks.round_status}}
+							</b>
+							<b class="text_style" style="display: block;">epoch: 
+								{{health.output.health.timechecks.epoch}}
+							</b>
+							<b class="text_style" style="display: block;">round: 
+								{{health.output.health.timechecks.round}}
+							</b>
+							
+							{% for mon in health.output.health.timechecks.mons %}
+								<b style="font-style: italic;color: green">Mon-{{forloop.counter}}</b>
+								{% for key,value in mon.items %}
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">{{key}}</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ value }}
+									    </span>
+									</li>
+								{%endfor %}
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="list-group" style="margin-top: 5px;background-color:#F2F1F0;padding: 5px;">
+							{% for mon in health.output.health.health.health_services.0.mons %}
+								<b style="font-style: italic;color: green">Mon-{{mon.name}}</b>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">last_updated</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.last_updated }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">avail_percent</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.avail_percent }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">total</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.kb_total|kbytes_to_humanize }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">avail</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.kb_avail|kbytes_to_humanize }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">used</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.kb_used|kbytes_to_humanize }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">health</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.health }}
+									    </span>
+									</li>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="list-group" style="margin-top: 5px;background-color:#F2F1F0;padding: 5px;">
+							{% for mon in health.output.health.health.health_services.0.mons %}
+								<b style="font-style: italic;color: green">Mon-{{mon.name}}</b>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">last_updated</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.store_stats.last_updated }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">log</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.store_stats.bytes_log|bytes_to_humanize }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">miscellanious</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.store_stats.bytes_misc|bytes_to_humanize }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">sst</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.store_stats.bytes_sst|bytes_to_humanize }}
+									    </span>
+									</li>
+									<li class="list-group-item justify-content-between terminal_style">
+									    <b class="text_style">total</b>
+									    <span class="badge badge-primary badge-pill badge_style">
+									    	{{ mon.store_stats.bytes_total|bytes_to_humanize }}
+									    </span>
+									</li>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

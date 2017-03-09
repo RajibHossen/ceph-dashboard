@@ -1,0 +1,68 @@
+{% load staticfiles %}
+{% load percentage %}
+{% load bytes_to_humanize %}
+{% load kbytes_to_humanize %}
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >PG</a></li>
+			<li><a href="#">Stats</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>Placement Group status</span>
+				</div>
+			</div>
+			<div class="box-content no-padding">
+				<div class="row">
+					<div class="col-md-offset-4 col-md-4">
+						<div class="list-group" style="margin-top: 5px;">
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">degraded_objects: {{pg_stats.output.degraded_objects }} 
+								    </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">num_pgs: {{pg_stats.output.num_pgs }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">degraded_ratio: 
+								    {{pg_stats.output.degraded_ratio|percentage:1}} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">degraded_total: 
+								    {{pg_stats.output.degraded_total }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">version: 
+								    {{pg_stats.output.version }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">misplaced_objects: 
+								    {{pg_stats.output.misplaced_objects }} </b>
+								</li>
+								<li class="list-group-item  terminal_style" >
+								    <b class="text_style">misplaced_ratio: 
+								    {{pg_stats.output.misplaced_ratio|percentage:1}} </b>
+								</li>
+								PG Stats
+								{% for stat in pg_stats.output.num_pg_by_state %}
+									<li class="list-group-item terminal_style" >
+									    <b class="text_style"> 
+									    {{stat.name}}:{{stat.num}}
+									    </b>
+									</li>
+								{%endfor%}	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

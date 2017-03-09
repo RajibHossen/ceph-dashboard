@@ -1,0 +1,141 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >Pool</a></li>
+			<li><a href="#">Parameters</a></li>
+		</ol>
+	</div>
+</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<div class="panel-title">
+			List PG on specific POOL
+		</div>
+	</div>
+	<div class="panel-body">
+		<form id="pool_parameters_form" method="post" class="form-horizontal">
+		{% csrf_token %}
+			<div class="form-group">
+				<label class="col-sm-1 control-label">Pool</label>
+				<div class="col-sm-4">
+					<select class="populate placeholder" name="pool_parameters_pid" id="pool_parameters_pid">
+						<option value="">-- Select a pool --</option>
+						{% for pool in pool_data.output %}
+							<option value="{{pool}}">{{pool}}</option>
+						{%endfor%}
+					</select>
+				</div>
+				<label class="col-sm-1 control-label">Variables</label>
+				<div class="col-sm-4">
+					<select class="populate placeholder" name="pool_parameters_var" 
+					id="pool_parameters_var">
+						<option value="">-- Select an option --</option>
+						<option value="size">size</option>
+						<option value="min_size">min_size</option>
+						<option value="crash_replay_interval">crash_replay_interval</option>
+						<option value="pg_num">pg_num</option>
+						<option value="pgp_num">pgp_num</option>
+						<option value="crush_ruleset">crush_ruleset</option>
+						<option value="hashpspool">hashpspool</option>
+						<option value="nopgchange">nopgchange</option>
+						<option value="nosizechange">nosizechange</option>
+						<option value="write_fadvise_dontneed">write_fadvise_dontneed</option>
+						<option value="noscrub">noscrub</option>
+						<option value="nodeep-scrub">nodeep-scrub</option>
+						<option value="hit_set_type">hit_set_type</option>
+						<option value="hit_set_period">hit_set_period</option>
+						<option value="hit_set_count">hit_set_count</option>
+						<option value="hit_set_fpp">hit_set_fpp</option>
+						<option value="auid">auid</option>
+						<option value="target_max_objects">target_max_objects</option>
+						<option value="target_max_bytes">target_max_bytes</option>
+						<option value="cache_target_dirty_ratio">cache_target_dirty_ratio</option>
+						<option value="cache_target_dirty_high_ratio">cache_target_dirty_high_ratio</option>
+						<option value="cache_target_full_ratio">cache_target_full_ratio</option>
+						<option value="cache_min_flush_age">cache_min_flush_age</option>
+						<option value="cache_min_evict_age">cache_min_evict_age</option>
+						<option value="erasure_code_profile">erasure_code_profile</option>
+						<option value="min_read_recency_for_promote">min_read_recency_for_promote</option>
+						<option value="all">all</option>
+						<option value="min_write_recency_for_promote">min_write_recency_for_promote</option>
+						<option value="fast_read">fast_read</option>
+						<option value="hit_set_grade_decay_rate">hit_set_grade_decay_rate</option>
+						<option value="hit_set_search_last_n">hit_set_search_last_n</option>
+						<option value="scrub_min_interval">scrub_min_interval</option>
+						<option value="scrub_max_interval">scrub_max_interval</option>
+						<option value="deep_scrub_interval">deep_scrub_interval</option>
+						<option value="recovery_priority">recovery_priority</option>
+						<option value="recovery_op_priority">recovery_op_priority</option>
+						<option value="scrub_priority">scrub_priority</option>
+						<option value="compression_mode">compression_mode</option>
+						<option value="compression_algorithm">compression_algorithm</option>
+						<option value="compression_required_ratio">compression_required_ratio</option>
+						<option value="compression_max_blob_size">compression_max_blob_size</option>
+						<option value="compression_min_blob_size">compression_min_blob_size</option>
+						<option value="csum_type">csum_type</option>
+						<option value="csum_min_block">csum_min_block</option>
+						<option value="csum_max_block">csum_max_block</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-sm-offset-8">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="pool_parameters_result">
+</div>
+<script type="text/javascript">
+function DemoSelect2(){
+	$('#pool_parameters_pid').select2();
+	$('#pool_parameters_var').select2();
+}
+function create_post() {
+	console.log($('#pool_parameters_pid').val())
+	console.log($('#pool_parameters_var').val())
+    console.log("create post is working!") // sanity check
+    $.ajax({
+    	mimeType: 'text/html; charset=utf-8',
+        url : "pool/parameters/", 
+        type : "POST", 
+        data : {
+        	pool: $('#pool_parameters_pid').val(),
+        	parameter: $('#pool_parameters_var').val(),
+        	csrfmiddlewaretoken: '{{ csrf_token }}'
+    	},
+
+        // handle a successful response
+        success : function(data) {
+        	//var obj = jQuery.parseJSON( data );
+            $('#pool_parameters_result').html(data);
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#pool_parameters_result').html("<div class='alert-box alert alert-danger' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        },
+        dataType: "html"
+    });
+};
+$(document).ready(function() {
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(PoolGetParametersValidator);
+
+	$('#pool_parameters_form').on('submit', function(event){
+	    event.preventDefault();
+	    console.log("form submitted!")  // sanity check
+	    create_post();
+	});
+});
+
+</script>

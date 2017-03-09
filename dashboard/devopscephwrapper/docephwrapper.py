@@ -407,6 +407,12 @@ class CephWrapper(client.CephClient):
         else:
             return self.get('osd/pool/stats', **kwargs)
 
+    def osd_pool_ls(self,detail=None,**kwargs):
+        if detail is not None:
+            return self.get('osd/pool/ls?detail={0}'.format(detail),**kwargs)
+        else:
+            return self.get('osd/pool/ls',**kwargs)
+
     def osd_stat(self, **kwargs):
         return self.get('osd/stat', **kwargs)
 
@@ -650,6 +656,38 @@ class CephWrapper(client.CephClient):
 
     def pg_stat(self, **kwargs):
         return self.get('pg/stat', **kwargs)
+
+    def pg_ls_by_pool(self,pool_id,states,**kwargs):
+
+        if pool_id and states:
+            return self.get('pg/ls?pool={0}&states={1}'.format(pool_id,states),**kwargs)
+        elif pool_id and not states:
+            return self.get('pg/ls?pool={0}'.format(pool_id),**kwargs)
+        elif not pool_id and states:
+            return self.get('pg/ls?states={0}'.format(states),**kwargs)
+        else:
+            return self.get('pg/ls',**kwargs)
+
+    def pg_ls_by_osd(self,osd_id,pool_id,states,**kwargs):
+
+        if pool_id and states:
+            return self.get('pg/ls-by-osd?osd={0}&pool={1}&states={2}'.format(osd_id,pool_id,states),**kwargs)
+        elif pool_id and not states:
+            return self.get('pg/ls-by-osd?osd={0}&pool={1}'.format(osd_id,pool_id),**kwargs)
+        elif not pool_id and states:
+            return self.get('pg/ls-by-osd?osd={0}&states={1}'.format(osd_id,states),**kwargs)
+        else:
+            return self.get('pg/ls-by-osd?osd={0}'.format(osd_id),**kwargs)
+
+    def pg_ls_by_primary(self,osd_id,pool_id,states,**kwargs):
+        if pool_id and states:
+            return self.get('pg/ls-by-primary?osd={0}&pool={1}&states={2}'.format(osd_id,pool_id,states),**kwargs)
+        elif pool_id and not states:
+            return self.get('pg/ls-by-primary?osd={0}&pool={1}'.format(osd_id,pool_id),**kwargs)
+        elif not pool_id and states:
+            return self.get('pg/ls-by-primary?osd={0}&states={1}'.format(osd_id,states),**kwargs)
+        else:
+            return self.get('pg/ls-by-primary?osd={0}'.format(osd_id),**kwargs)
 
     ###
     # tell GET calls

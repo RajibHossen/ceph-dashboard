@@ -1876,6 +1876,56 @@ function displayFlickrImages(data){
 //
 // Example form validator function
 //
+
+function PoolGetParametersValidator(){
+	$('#pool_parameters_form').bootstrapValidator({
+		message: 'This value is not valid',
+		fields:{
+			pool_parameters_pid: {
+				validators: {
+					notEmpty: {
+						message: 'Pool name is required and can\'t be empty'
+					}
+				}
+			},
+			pool_parameters_var: {
+				validators: {
+					notEmpty: {
+						message: 'parameter name is required and can\'t be empty'
+					}
+				}
+			}
+		}
+	});
+}
+function PgLsByPrimaryValidator(){
+	$('#pg_ls_by_primary_form').bootstrapValidator({
+		message: 'This value is not valid',
+		fields:{
+			pg_ls_by_primary_selection: {
+				validators: {
+					notEmpty: {
+						message: 'OSD name is required and can\'t be empty'
+					}
+				}
+			}
+		}
+	});
+}
+function PgLsByOsdValidator(){
+	$('#pg_ls_by_osd_form').bootstrapValidator({
+		message: 'This value is not valid',
+		fields:{
+			pl_ls_by_osd_selection: {
+				validators: {
+					notEmpty: {
+						message: 'OSD name is required and can\'t be empty'
+					}
+				}
+			}
+		}
+	});
+}
 function OsdSearchFormValidator(){
 	$('#osd_search_form').bootstrapValidator({
 		message: 'This value is not valid',

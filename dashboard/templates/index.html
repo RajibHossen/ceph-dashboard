@@ -186,20 +186,9 @@
 						<span class="hidden-xs">MONs</span>
 					</a>
 					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="{% url 'mon_health' %}">Health</a></li>
 						<li><a class="ajax-link" href="{% url 'mon_metadata' %}">Metadata</a></li>
 						<li><a class="ajax-link" href="{% url 'mon_quorum' %}">Quorum</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-object-group"></i>
-						<span class="hidden-xs">POOLS</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="">List</a></li>
-						<li><a class="ajax-link" href="">Stats</a></li>
-						<li><a class="ajax-link" href="">Details</a></li>
-						<li><a class="ajax-link" href="">Parameters</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -208,10 +197,26 @@
 						<span class="hidden-xs">Placement Groups</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="">Full PG stats</a></li>
-						<li><a class="ajax-link" href="">List PG on OSD</a></li>
-						<li><a class="ajax-link" href="">adasd</a></li>
-						<li><a class="ajax-link" href="">asdasd</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_stats' %}">PG stats</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_brief' %}">PG Briefs</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_summary' %}">PG Summary</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_pool_summary' %}">PG Pools Stats</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_dump_stuck' %}">Dump Stuck</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_ls_by_pool' %}">PG IN POOLS</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_ls_by_osd' %}">PG ON OSD</a></li>
+						<li><a class="ajax-link" href="{% url 'pg_ls_by_primary' %}">PG ON Primary OSD</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-object-group"></i>
+						<span class="hidden-xs">POOLS</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="{% url 'pool_basic_info'%}">Basic Info</a></li>
+						<li><a class="ajax-link" href="{% url 'pool_details'%}">Details</a></li>
+						<li><a class="ajax-link" href="">Stats</a></li>
+						<li><a class="ajax-link" href="{% url 'pool_parameters'%}">Parameters</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
