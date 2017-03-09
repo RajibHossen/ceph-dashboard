@@ -20,7 +20,7 @@ from devopscephwrapper import cephserviceutility
 wrapper = CephWrapper(endpoint='http://192.168.120.13:8090/api/v0.1/',
                       debug = True)
 
-def index(request):        
+def index(request):
     template = loader.get_template('index.html')
     context = {
         'user':request.user
