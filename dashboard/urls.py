@@ -28,5 +28,9 @@ urlpatterns = [
     url(r'^pg/ls/by/primary/$',views.pg_ls_by_primary,name='pg_ls_by_primary'),
     url(r'^pool/basic/info/$',views.pool_basic_info,name='pool_basic_info'),
     url(r'^pool/details/$',views.pool_details,name='pool_details'),
-    url(r'^pool/parameters/$',views.pool_parameters,name='pool_parameters')
+    url(r'^pool/parameters/$',views.pool_parameters,name='pool_parameters'),
+    url(r'^pool/read/bps/$',views.pool_rbps,name='pool_rbps'),
+    url(r'^pool/write/bps/$',views.pool_wbps,name='pool_wbps'),
+    url(r'^pool/read/ops/$',views.pool_rops,name='pool_rops'),
+    url(r'^pool/write/ops/$',views.pool_wops,name='pool_wops')
 ]

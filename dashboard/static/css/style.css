@@ -2391,3 +2391,14 @@ td.beauty-hover {
 .text_style{
    font-family: monospace;
 }
+.iobox{
+  width: 100%;
+  height: 200px;
+  background-color: #002B36;
+  color: #ffffff;
+}
+.iobox b{
+      position: absolute;
+    margin-top: 25%;
+    margin-left: 25%;
+}

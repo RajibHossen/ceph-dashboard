@@ -30,7 +30,7 @@
  				<form method="post" action="{% url 'login' %}">
 				{% csrf_token %}
 					<div class="text-center">
-						<h3 class="page-header">DevOOPS Login Page</h3>
+						<h3 class="page-header">Ceph Dashboard Login Page</h3>
 						{% if form.errors %}
             						<p class="alert alert-danger">Your username and password didn't match. Please try again.</p>
 						{% endif %}

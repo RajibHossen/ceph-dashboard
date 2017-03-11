@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.template.defaulttags import csrf_token
 from django.conf import settings
@@ -20,6 +20,44 @@ from devopscephwrapper import cephserviceutility
 wrapper = CephWrapper(endpoint='http://192.168.120.13:8090/api/v0.1/',
                       debug = True)
 
+# def login_user(request):
+#     if request.method == "POST":
+#         next_page = request.GET.get('next')
+#         name = request.POST.get('username')
+#         user_pass = request.POST.get('password')
+#         print name,user_pass
+#         user = authenticate(username=name,password=user_pass)
+#         print str(request)
+#         print user.is_active
+#         if user is not None and user.is_active:
+#             login(request,user)
+#             print request.session.session_key
+#             print str(request)
+#             print str(user)
+
+           
+#             if next_page:
+#                 return HttpResponseRedirect(next_page)
+#             else:
+#                 print "redirecting to home"
+#                 redirect_to = reverse("index")
+#                 return HttpResponseRedirect(redirect_to)
+#                 #return redirect('index')
+#         else:
+#            redirect_to = reverse("login")
+#            return HttpResponseRedirect("fasdas")
+#     else:
+#         template = loader.get_template('registration/login.html')
+#         context = {
+#         }
+#         output = template.render(context,request)
+#         return HttpResponse(output)
+
+# def logout_user(request):
+#     logout(request)
+#     return HttpResponse("Logged out successfully")
+
+@login_required
 def index(request):
     template = loader.get_template('index.html')
     context = {
@@ -398,6 +436,43 @@ def pool_parameters(request):
 
         template = loader.get_template('pages/pool_parameters.html')
         return HttpResponse(template.render(context,request))
+
+def pool_rbps(request):
+    response,pool_stats = wrapper.osd_pool_stats(body='json')
+
+    context = {
+        'pool_stats':pool_stats
+    }
+
+    template = loader.get_template('pages/pool_rbps.html')
+    return HttpResponse(template.render(context,request))
+def pool_wbps(request):
+    response,pool_stats = wrapper.osd_pool_stats(body='json')
+
+    context = {
+        'pool_stats':pool_stats
+    }
+
+    template = loader.get_template('pages/pool_wbps.html')
+    return HttpResponse(template.render(context,request))
+def pool_rops(request):
+    response,pool_stats = wrapper.osd_pool_stats(body='json')
+
+    context = {
+        'pool_stats':pool_stats
+    }
+
+    template = loader.get_template('pages/pool_rops.html')
+    return HttpResponse(template.render(context,request))
+def pool_wops(request):
+    response,pool_stats = wrapper.osd_pool_stats(body='json')
+
+    context = {
+        'pool_stats':pool_stats
+    }
+
+    template = loader.get_template('pages/pool_wops.html')
+    return HttpResponse(template.render(context,request))
 # def login_user(request):
 #     next_page = request.GET.get('next')
 #     name = request.POST.get('username')

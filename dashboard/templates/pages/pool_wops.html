@@ -1,0 +1,39 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >Pools</a></li>
+			<li><a href="#">Stats</a></li>
+			<li><a href="#">write op sec</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	{% for pool in pool_stats.output %}
+	<div class="col-md-3">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-hdd-o"></i>
+					<span>Write,POOL - {{pool.pool_name}}</span>
+				</div>
+			</div>
+			<div class="box-content no-padding">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="iobox">
+							<b>op/sec:
+								{%if pool.client_io_rate.read_bytes_sec %}
+									{{pool.client_io_rate.read_bytes_sec}}
+								{%else%}
+									0
+								{%endif%}
+							</b>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{%endfor%}
+</div>
