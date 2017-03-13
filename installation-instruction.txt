@@ -10,5 +10,8 @@
 10. Add apache to root user group `usermod -a -G root apache`
 11. change permission to root `chmod 710 /root/`
 12. give ownership to apache of the project directory `chown :apache ceph-dashboard/`
+13. collect the admin and other static file `python manage.py collectstatic`
+14. copy the root static files to app static directory `cp -r admin/ ../dashboard/static/`
+15. remove the root static directory `cd ..` `rm -rf static/`
 13. start and enable httpd service
 
