@@ -4,4 +4,4 @@ yum group install "Development Tools"
 systemctl start mariadb
 systemctl status mariadb
 systemctl enable mariadb
-yum install mysql_secure_installation
+mysql_secure_installation
