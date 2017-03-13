@@ -1,0 +1,14 @@
+1. Install packages specified in 'system-requirements.txt'
+2. Configure mysql and create database of your choice
+3. Install packages of python specified in 'requirements.txt'
+4. update database section of settings.py using your credential
+5. python manage.py makemigrations
+6. python manage.py migrate
+7. create an admin user for login `python manage.py createsuperuser`
+8. copy the 'django.conf' to /etc/httpd/conf.d/ directory
+9. change according to your need
+10. Add apache to root user group `usermod -a -G root apache`
+11. change permission to root `chmod 710 /root/`
+12. give ownership to apache of the project directory `chown :apache ceph-dashboard/`
+13. start and enable httpd service
+
