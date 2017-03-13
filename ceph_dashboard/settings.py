@@ -25,7 +25,7 @@ SECRET_KEY = 'v96464tj1*-3z*#glay2pv=)4$x+-hi^ydb$7xr1sq=!6)-i&j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.8.79','http://cephnode1']
+ALLOWED_HOSTS = ['192.168.8.79','cephnode1']
 
 
 # Application definition
