@@ -1,5 +1,7 @@
-epel-release python-pip httpd mod_wsgi mariadb-server
+yum install epel-release python-pip httpd mod_wsgi mariadb-server
+yum install python-devel mysql-devel
+yum group install "Development Tools"
 systemctl start mariadb
 systemctl status mariadb
 systemctl enable mariadb
-mysql_secure_installation
+yum install mysql_secure_installation
