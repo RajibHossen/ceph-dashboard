@@ -473,6 +473,17 @@ def pool_wops(request):
 
     template = loader.get_template('pages/pool_wops.html')
     return HttpResponse(template.render(context,request))
+
+
+def auth_user_list(request):
+    response,user_list = wrapper.auth_list(body='json')
+
+    context = {
+        'user_list':user_list
+    }
+    template = loader.get_template('pages/auth_user_list.html')
+    return HttpResponse(template.render(context,request))
+
 # def login_user(request):
 #     next_page = request.GET.get('next')
 #     name = request.POST.get('username')

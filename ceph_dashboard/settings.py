@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 #SESSION_COOKIE_SECURE = True
-#SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

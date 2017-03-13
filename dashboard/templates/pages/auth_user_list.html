@@ -1,0 +1,21 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" class="ajax-link">Dashboard</a></li>
+			<li><a href="#" >User</a></li>
+			<li><a href="#">List</a></li>
+		</ol>
+	</div>
+</div>
+<div class="w3-container w3-content">
+{%for user in user_list.output.auth_dump %}
+	<div class="w3-panel w3-white w3-card-2 w3-hover-shadow w3-display-container">
+	  <p class="w3-text-blue"><b>{{user.entity}}</b></p>
+	  <p>Key: {{user.key}}</p>
+	  <p class="w3-text-blue">Capabilities</p>
+	  {%for key,value in user.caps.items%}
+	  <p>{{key}}:{{value}} </p>
+	  {%endfor%}
+	</div>
+{%endfor%}
+</div>

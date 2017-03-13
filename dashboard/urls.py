@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^pool/read/bps/$',views.pool_rbps,name='pool_rbps'),
     url(r'^pool/write/bps/$',views.pool_wbps,name='pool_wbps'),
     url(r'^pool/read/ops/$',views.pool_rops,name='pool_rops'),
-    url(r'^pool/write/ops/$',views.pool_wops,name='pool_wops')
+    url(r'^pool/write/ops/$',views.pool_wops,name='pool_wops'),
+    url(r'^auth/list/$',views.auth_user_list,name='auth_list')
 ]
