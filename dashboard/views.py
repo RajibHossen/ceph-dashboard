@@ -74,7 +74,7 @@ def ajax_dashboard(request):
     reponse,mon_metadata = wrapper.mon_metadata(body='json')
     response,osd_performance = wrapper.osd_perf(body='json')
 
-    template = loader.get_template('pages/dashboard.html')
+    
 
     osd_metadata = cephserviceutility.format_json(osd_metadata)
     mon_metadata = cephserviceutility.format_json(mon_metadata)
@@ -87,6 +87,19 @@ def ajax_dashboard(request):
         'mon_metadata':mon_metadata,
         'osd_perf':osd_performance
     }
+    template = loader.get_template('pages/dashboard.html')
+    output = template.render(context,request)
+    return HttpResponse(output)
+
+def section_status(request):
+    response,status = wrapper.status(body='json')
+    response,report = wrapper.report(body='json')
+
+    context = {
+        'cephstatus':status,
+        'report':report
+    }
+    template = loader.get_template('pages/home/status_section.html')
     output = template.render(context,request)
     return HttpResponse(output)
 

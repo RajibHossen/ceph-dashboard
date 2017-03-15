@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     url(r'^$',views.index,name='index'),
     url(r'^dashboard/home/$',views.ajax_dashboard,name='ajax_dashboard'),
+    url(r'^dashboard/home/section_status/$',views.section_status,name='section_status'),
     url(r'^osd/tree/$',views.ceph_osd_tree,name='ceph_osd_tree'),
     url(r'^osd/utilization/$',views.ceph_osd_utilization,name='ceph_osd_utilization'),
     url(r'^osd/dumps/$',views.ceph_osd_dump,name='ceph_osd_dumps'),

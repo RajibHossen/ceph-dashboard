@@ -15,40 +15,7 @@
 <!--Start Dashboard 1-->
 <div id="dashboard-header" class="row">
 	<div class="col-xs-12">
-      
-         {% if report.output.version >= "11" %}
-            <h3>CEPH Version: {{ report.output.version }} (Kraken) </h3>
-         {% elif report.output.version >= "10" %} 
-            <h3> CEPH Version: {{ report.output.version }} (Jewel) </h3>
-         {% else %}
-            <h3>CEPH Version: {{ report.output.version }} </h3>
-         {% endif %}
-
-	     <h5>Cluster ID: {{ cephstatus.output.fsid }} </h5>
-         <div class="panel panel-primary">
-             <div class="panel-heading">
-                 <h3 class="panel-title">Ceph Cluster Overall Status</h3>
-             </div>
-             <div class="panel-body">
-                {% if cephstatus.status == "OK" %}
-	                {% if cephstatus.output.health.overall_status == "HEALTH_OK" %}
-		                <h3 class="alert alert-success alert-heading text-center">{{ cephstatus.output.health.overall_status }}</h3>
-	                {% elif cephstatus.output.health.overall_status == "HEALTH_WARN" %}
-		                <h3 class="alert alert-warning text-center">{{ cephstatus.output.health.overall_status }}</h3>
-	                {% else %}
-		                <h3 class="alert alert-danger text-center">{{ cephstatus.output.health.overall_status }}</h3>
-	                {% endif %}
-                    {% for sum in cephstatus.output.health.summary %}
-                        <h6>*{{ sum.severity }}: {{ sum.summary }}</h6>
-                    {% endfor %}
-                    {% for details in cephstatus.output.health.detail %}
-                        <h6> *{{ details  }}</h6>
-                    {% endfor %}
-	            {% else %}
-	                <h3> No Status Available</h3>
-	            {% endif %}
-             </div>
-         </div>
+      <div id=status_section></div>
 	</div>
 	<div class="clearfix visible-xs"></div>
 </div>
@@ -347,8 +314,25 @@ function drawChart() {
 //var sparkline_arr_2 = SparklineTestData();
 //var sparkline_arr_3 = SparklineTestData();
 
-
+function ajaxCall() {
+    $.ajax({
+		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
+		url: '/dashboard/home/section_status',
+		type: 'GET',
+		success: function(data) {
+			console.log('loaded dynamic content')
+			$('#status_section').html(data);
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
+		},
+		dataType: "html",
+		async: true
+	});
+}
 $(document).ready(function() {
+	ajaxCall();
+	setInterval(ajaxCall,10000);
 	// Make all JS-activity for dashboard
 	DashboardTabChecker();
 	// Load Knob plugin and run callback for draw Knob charts for dashboard(tab-servers)
