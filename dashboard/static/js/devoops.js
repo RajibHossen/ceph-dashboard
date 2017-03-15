@@ -243,6 +243,7 @@ function LoadSparkLineScript(callback){
 //
 function LoadAjaxContent(url){
 	$('.preloader').show();
+	console.log("Dynamically loading page")
 	$.ajax({
 		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
 		url: url,
@@ -2366,8 +2367,9 @@ $(document).ready(function () {
 	if (ajax_url.length < 1) {
 		ajax_url = 'dashboard/home/';
 	}
-	//LoadAjaxContent(ajax_url);
-	setInterval(LoadAjaxContent(ajax_url),5000);
+	LoadAjaxContent(ajax_url);
+	//setInterval(LoadAjaxContent, 5000,ajax_url);
+	//setInterval(,5000);
 	$('.main-menu').on('click', 'a', function (e) {
 		var parents = $(this).parents('li');
 		var li = $(this).closest('li.dropdown');

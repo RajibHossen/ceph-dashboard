@@ -25,7 +25,7 @@ class CephClient(object):
         """
         Initialize the class, get the necessary parameters
         """
-        self.user_agent = 'python-cephclient'
+        self.user_agent = 'ipvdevops-cephclient'
 
         self.params = params
         self.log = self.log_wrapper()
@@ -115,7 +115,7 @@ class CephClient(object):
         """
         Wrapper to set logging parameters for output
         """
-        log = logging.getLogger('client.py')
+        log = logging.getLogger('docephclient.py')
 
         # Set the log format and log level
         try:
