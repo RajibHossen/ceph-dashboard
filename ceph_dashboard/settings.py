@@ -11,7 +11,24 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import ldap
+from django_auth_ldap.config import LDAPSearch
+AUTH_LDAP_SERVER_URI = "ldap://research.ipvrajib.com"
+AUTH_LDAP_BIND_DN = "dc=ipvrajib,dc=com"
+AUTH_LDAP_BIND_PASSWORD = "rajib123"
+AUTH_LDAP_USER_SEARCH = LDAPSearch("cn=users,cn=compat,dc=ipvrajib,dc=com",
+    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+AUTH_LDAP_START_TLS = False
 
+# Populate the Django user from the LDAP directory.
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
+
+# This is the default, but I like to be explicit.
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,7 +47,8 @@ ALLOWED_HOSTS = ['192.168.8.79','cephnode1']
 
 # Application definition
 
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTHENTICATION_BACKENDS = [ 'django_auth_ldap.backend.LDAPBackend',
+                            'django.contrib.auth.backends.ModelBackend']
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',

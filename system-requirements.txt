@@ -1,6 +1,10 @@
 yum install epel-release python-pip httpd mod_wsgi mariadb-server
 yum install python-devel mysql-devel
 yum group install "Development Tools"
+#if ubuntu these packages
+# sudo apt-get install python-dev libldap2-dev libsasl2-dev libssl-dev
+# if centos 
+# yum install python-devel openldap-devel
 systemctl start mariadb
 systemctl status mariadb
 systemctl enable mariadb

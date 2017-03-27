@@ -9,6 +9,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 import pdb
+from django_auth_ldap.backend import LDAPBackend
+
 # import os, sys
 # lib_path = os.path.abspath(os.path.join('..', 'devopscephwrapper'))
 # sys.path.append(lib_path)
@@ -25,17 +27,11 @@ wrapper = CephWrapper(endpoint='http://192.168.120.13:8090/api/v0.1/',
 #         next_page = request.GET.get('next')
 #         name = request.POST.get('username')
 #         user_pass = request.POST.get('password')
-#         print name,user_pass
-#         user = authenticate(username=name,password=user_pass)
-#         print str(request)
-#         print user.is_active
-#         if user is not None and user.is_active:
+#         auth = LDAPBackend()
+#         user = auth.authenticate(username=name,password=user_pass)
+#         print user
+#         if user is not None:
 #             login(request,user)
-#             print request.session.session_key
-#             print str(request)
-#             print str(user)
-
-           
 #             if next_page:
 #                 return HttpResponseRedirect(next_page)
 #             else:
@@ -45,7 +41,7 @@ wrapper = CephWrapper(endpoint='http://192.168.120.13:8090/api/v0.1/',
 #                 #return redirect('index')
 #         else:
 #            redirect_to = reverse("login")
-#            return HttpResponseRedirect("fasdas")
+#            return HttpResponseRedirect("/login")
 #     else:
 #         template = loader.get_template('registration/login.html')
 #         context = {
