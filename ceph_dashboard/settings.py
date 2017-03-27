@@ -47,8 +47,7 @@ ALLOWED_HOSTS = ['192.168.8.79','cephnode1']
 
 # Application definition
 
-#AUTHENTICATION_BACKENDS = [ 'django_auth_ldap.backend.LDAPBackend',
-AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.RemoteUserBackend',
+AUTHENTICATION_BACKENDS = [ 'django_auth_ldap.backend.LDAPBackend',
                             'django.contrib.auth.backends.ModelBackend']
 
 INSTALLED_APPS = [
@@ -70,7 +69,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
