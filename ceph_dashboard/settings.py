@@ -12,24 +12,47 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import ldap
-from django_auth_ldap.config import LDAPSearch
+from django_auth_ldap.config import LDAPSearch,GroupOfNamesType,LDAPGroupType
 
-# AUTH_LDAP_SERVER_URI = "ldap://research.ipvrajib.com"
-# AUTH_LDAP_BIND_DN = "dc=ipvrajib,dc=com"
 
-# AUTH_LDAP_USER_SEARCH = LDAPSearch("cn=users,cn=compat,dc=ipvrajib,dc=com",
-#     ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
-# AUTH_LDAP_START_TLS = False
+AUTH_LDAP_SERVER_URI = "ldap://research.ipvrajib.com"
 
-# # Populate the Django user from the LDAP directory.
-# AUTH_LDAP_USER_ATTR_MAP = {
-#     "first_name": "givenName",
-#     "last_name": "sn",
-#     "email": "mail"
-# }
+AUTH_LDAP_BIND_DN = "dc=ipvrajib,dc=com"
 
-# # This is the default, but I like to be explicit.
-# AUTH_LDAP_ALWAYS_UPDATE_USER = True
+#AUTH_LDAP_BIND_PASSWORD = "rajib123"
+
+AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=ipvrajib,dc=com",ldap.SCOPE_SUBTREE,"(uid=%(user)s)")
+
+AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,cn=users,cn=accounts,dc=ipvrajib,dc=com"
+
+AUTH_LDAP_START_TLS = False
+
+# Set up the basic group parameters.
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("cn=groups,cn=accounts,dc=ipvrajib,dc=com",
+    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+  )
+AUTH_LDAP_GROUP_TYPE = LDAPGroupType()
+
+# # Simple group restrictions
+# AUTH_LDAP_REQUIRE_GROUP = "cn=enabled,ou=django,ou=groups,dc=example,dc=com"
+# AUTH_LDAP_DENY_GROUP = "cn=disabled,ou=django,ou=groups,dc=example,dc=com"
+
+# Populate the Django user from the LDAP directory.
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
+# Use LDAP group membership to calculate group permissions.
+AUTH_LDAP_FIND_GROUP_PERMS = True
+
+# Cache group memberships for an hour to minimize LDAP traffic
+AUTH_LDAP_CACHE_GROUPS = True
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
+# This is the default, but I like to be explicit.
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,7 +71,8 @@ ALLOWED_HOSTS = ['192.168.8.79','cephnode1']
 
 # Application definition
 
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTHENTICATION_BACKENDS = ['django_auth_ldap.backend.LDAPBackend',
+        'django.contrib.auth.backends.ModelBackend']
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',

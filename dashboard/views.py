@@ -27,8 +27,7 @@ wrapper = CephWrapper(endpoint='http://192.168.120.13:8090/api/v0.1/',
 #         next_page = request.GET.get('next')
 #         name = request.POST.get('username')
 #         user_pass = request.POST.get('password')
-#         auth = LDAPBackend()
-#         user = auth.authenticate(username=name,password=user_pass)
+#         user = authenticate(username=name,password=user_pass)
 #         print user
 #         if user is not None:
 #             login(request,user)
