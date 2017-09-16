@@ -1,10 +1,10 @@
 1. Install packages specified in 'system-requirements.txt'
 2. Configure mysql and create database of your choice
 3. Install packages of python specified in 'requirements.txt'
-4. update database section of settings.py using your credential
+4. update database section of settings.py using your 
+4. update ldap server url in settings.py
 5. python manage.py makemigrations
 6. python manage.py migrate
-7. create an admin user for login `python manage.py createsuperuser`
 8. copy the 'django.conf' to /etc/httpd/conf.d/ directory
 9. change according to your need
 10. Add apache to root user group `usermod -a -G root apache`
@@ -14,4 +14,5 @@
 14. copy the root static files to app static directory `cp -r admin/ ../dashboard/static/`
 15. remove the root static directory `cd ..` `rm -rf static/`
 13. start and enable httpd service
+
 
