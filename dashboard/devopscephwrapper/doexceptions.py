@@ -1,3 +1,6 @@
+"""
+Exception module for ceph wrapper class
+"""
 class FunctionNotImplemented(Exception):
     """
     Function not yet finished

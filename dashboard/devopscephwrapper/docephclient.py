@@ -7,8 +7,8 @@ import requests
 
 try:
     from lxml import etree
-except ImportError as e:
-    print("Missing required python module: " + str(e))
+except ImportError as error:
+    print "Missing required python module: " + str(error)
     exit()
 
 try:
@@ -16,10 +16,15 @@ try:
 except ImportError:
     import simplejson as json
 
-import doexceptions as exceptions
+
+
+import dashboard.devopscephwrapper.doexceptions as exceptions
 
 
 class CephClient(object):
+    """
+    Rest API verbs are defined and called to ceph from here
+    """
 
     def __init__(self, **params):
         """
@@ -39,6 +44,13 @@ class CephClient(object):
         self.http = requests.Session()
 
     def _request(self, url, method, **kwargs):
+        """
+        Customized request method
+        :param url: request url
+        :param method: request method
+        :param kwargs: variable arguments
+        :return: response, body
+        """
         if self.timeout is not None:
             kwargs.setdefault('timeout', self.timeout)
 
@@ -76,8 +88,7 @@ class CephClient(object):
 
         del kwargs['body']
 
-        self.log.debug("{0} URL: {1}{2} - {3}"
-                       .format(method, self.endpoint, url, str(kwargs)))
+        self.log.debug("{0} URL: {1}{2} - {3}".format(method, self.endpoint, url, str(kwargs)))
 
         resp = self.http.request(
             method,
@@ -100,15 +111,39 @@ class CephClient(object):
         return resp, body
 
     def get(self, url, **kwargs):
+        """
+        HTTP GET method
+        :param url:
+        :param kwargs:
+        :return: call request method
+        """
         return self._request(url, 'GET', **kwargs)
 
     def post(self, url, **kwargs):
+        """
+        HTTP POST method
+        :param url:
+        :param kwargs:
+        :return: call to request method
+        """
         return self._request(url, 'POST', **kwargs)
 
     def put(self, url, **kwargs):
+        """
+        HTTP PUT method
+        :param url:
+        :param kwargs:
+        :return: call request function
+        """
         return self._request(url, 'PUT', **kwargs)
 
     def delete(self, url, **kwargs):
+        """
+        HTTP DELETE method
+        :param url:
+        :param kwargs:
+        :return: call request method
+        """
         return self._request(url, 'DELETE', **kwargs)
 
     def log_wrapper(self):
@@ -119,7 +154,7 @@ class CephClient(object):
 
         # Set the log format and log level
         try:
-            debug = self.params["debug"]
+            #  debug = self.params["debug"]
             log.setLevel(logging.DEBUG)
         except KeyError:
             log.setLevel(logging.INFO)

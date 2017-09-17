@@ -3,12 +3,12 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
-#from django.shortcuts import render
-#from django.http import HttpResponseRedirect
-#from django.contrib.auth import authenticate, login, logout
-#from django.core.urlresolvers import reverse
-#from django.shortcuts import redirect
-#from django_auth_ldap.backend import LDAPBackend
+# from django.shortcuts import render
+# from django.http import HttpResponseRedirect
+# from django.contrib.auth import authenticate, login, logout
+# from django.core.urlresolvers import reverse
+# from django.shortcuts import redirect
+# from django_auth_ldap.backend import LDAPBackend
 
 # import os, sys
 # lib_path = os.path.abspath(os.path.join('..', 'devopscephwrapper'))
@@ -60,6 +60,7 @@ def index(request):
     output = template.render(context, request)
     return HttpResponse(output)
 
+
 def ajax_dashboard(request):
     """return dashboard content
     get status,report,pools,osd,mon metadata and osd performance from ceph
@@ -87,6 +88,7 @@ def ajax_dashboard(request):
     output = template.render(context, request)
     return HttpResponse(output)
 
+
 def section_status(request):
     """return ceph cluster status
 
@@ -102,6 +104,7 @@ def section_status(request):
     template = loader.get_template('pages/home/status_section.html')
     output = template.render(context, request)
     return HttpResponse(output)
+
 
 def ceph_osd_tree(request):
     """return osd tree rendered page
@@ -119,7 +122,15 @@ def ceph_osd_tree(request):
     template = loader.get_template('pages/ceph_osd_tree.html')
     return HttpResponse(template.render(context, request))
 
+
 def ceph_osd_utilization(request):
+    """return osd utilization rendered page
+
+    get data from cluster
+
+    :param request:
+    :return:
+    """
     _, osd_df = API_WRAPPER.osd_df(body='json')
     _, utilization = API_WRAPPER.osd_utilization(body='json')
 
@@ -131,7 +142,15 @@ def ceph_osd_utilization(request):
     template = loader.get_template('pages/osd_utilization.html')
     return HttpResponse(template.render(context, request))
 
+
 def ceph_osd_dump(request):
+    """
+    return osd dump rendered page
+
+    get data from cluster,format the data into structured system
+    :param request:
+    :return:
+    """
     _, osd_dump = API_WRAPPER.osd_dump(body='json')
     context = {
         'osd_dump':osd_dump
@@ -142,6 +161,13 @@ def ceph_osd_dump(request):
 
 
 def ceph_osd_search(request):
+    """
+    return osd search page and results
+
+    get data from html form, feed data into cluster, get data from cluster.
+    :param request:
+    :return:
+    """
 
     if request.method == "POST":
         osd_id = request.POST.get('osd_id')
@@ -164,7 +190,15 @@ def ceph_osd_search(request):
         template = loader.get_template('pages/ceph_osd_search.html')
         return HttpResponse(template.render(context, request))
 
+
 def ceph_osd_path(request):
+    """
+    return osd path rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
 
     _, metadata = API_WRAPPER.osd_metadata(body='json')
 
@@ -174,7 +208,15 @@ def ceph_osd_path(request):
     template = loader.get_template('pages/ceph_osd_path.html')
     return HttpResponse(template.render(context, request))
 
+
 def ceph_osd_ips(request):
+    """
+    return osd ip page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, metadata = API_WRAPPER.osd_metadata(body='json')
 
     context = {
@@ -183,7 +225,15 @@ def ceph_osd_ips(request):
     template = loader.get_template('pages/ceph_osd_ip.html')
     return HttpResponse(template.render(context, request))
 
+
 def mon_health(request):
+    """
+    return monitor health rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, health_status = API_WRAPPER.status(body='json')
 
     context = {
@@ -193,7 +243,15 @@ def mon_health(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def mon_quorum(request):
+    """
+    return monitor quorum rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, quorum = API_WRAPPER.quorum_status(body='json')
 
     context = {
@@ -203,7 +261,15 @@ def mon_quorum(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def get_mon_metadata(request):
+    """
+    return monitor metadata rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, metadata = API_WRAPPER.mon_metadata(body='json')
 
     context = {
@@ -213,8 +279,15 @@ def get_mon_metadata(request):
 
     return HttpResponse(template.render(context, request))
 
-def crush_profile(request):
 
+def crush_profile(request):
+    """
+    return crush algorithm profile rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, profile = API_WRAPPER.osd_crush_show_tunables(body='json')
     context = {
         'crush_profile':profile
@@ -222,7 +295,15 @@ def crush_profile(request):
     template = loader.get_template('pages/crush_profile.html')
     return HttpResponse(template.render(context, request))
 
+
 def crush_rules(request):
+    """
+    return crush rules rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, rules = API_WRAPPER.osd_crush_rule_dump(body='json')
     context = {
         'crush_rules':rules
@@ -230,7 +311,15 @@ def crush_rules(request):
     template = loader.get_template('pages/crush_rules.html')
     return HttpResponse(template.render(context, request))
 
+
 def crush_buckets(request):
+    """
+    return crush buckets rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, dump = API_WRAPPER.osd_crush_dump(body='json')
     context = {
         'dump':dump
@@ -238,7 +327,15 @@ def crush_buckets(request):
     template = loader.get_template('pages/crush_buckets.html')
     return HttpResponse(template.render(context, request))
 
+
 def crush_devices(request):
+    """
+    return crush devices rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, dump = API_WRAPPER.osd_crush_dump(body='json')
     context = {
         'dump':dump
@@ -246,7 +343,15 @@ def crush_devices(request):
     template = loader.get_template('pages/crush_devices.html')
     return HttpResponse(template.render(context, request))
 
+
 def pg_stats(request):
+    """
+    return placement group statisitcs rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, stats = API_WRAPPER.pg_stat(body='json')
 
     context = {
@@ -255,7 +360,15 @@ def pg_stats(request):
     template = loader.get_template('pages/pg_stats.html')
     return HttpResponse(template.render(context, request))
 
+
 def pg_brief(request):
+    """
+    return placement group brief rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, stats = API_WRAPPER.pg_dump(dumpcontents='pgs_brief', body='json')
 
     context = {
@@ -265,7 +378,15 @@ def pg_brief(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def pg_summary(request):
+    """
+    return placement group summary rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, stats = API_WRAPPER.pg_dump(dumpcontents='summary', body='json')
 
     context = {
@@ -275,7 +396,15 @@ def pg_summary(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def pg_pool_summary(request):
+    """
+    return placement group and pools summary rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, pool_summary = API_WRAPPER.pg_dump(dumpcontents='pools', body='json')
 
     context = {
@@ -285,7 +414,16 @@ def pg_pool_summary(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def pg_dump_stuck(request):
+    """
+    return placement group stuck lists rendered page
+
+    get data from html form, feed data into cluster,
+    and then sent data to html,format the data into structured for html
+    :param request:
+    :return:
+    """
 
     if request.method == "POST":
         stuck_value = request.POST.get('stuck_string')
@@ -305,7 +443,16 @@ def pg_dump_stuck(request):
         template = loader.get_template('pages/pg_dump_stuck.html')
         return HttpResponse(template.render(context, request))
 
+
 def pg_ls_by_pool(request):
+    """
+    return placement group by pool name rendered page
+
+    get data from html form, feed data into cluster,
+    and then sent data to html,format the data into structured for html
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         stuck_value = request.POST.get('stuck')
         pool_id = request.POST.get('pool')
@@ -331,8 +478,16 @@ def pg_ls_by_pool(request):
         template = loader.get_template('pages/pg_ls_by_pool.html')
         return HttpResponse(template.render(context, request))
 
-def pg_ls_by_osd(request):
 
+def pg_ls_by_osd(request):
+    """
+    return placement group osd rendered page
+
+    get data from html form, feed data into cluster,
+    and then sent data to html,format the data into structured for html
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         osd_id = request.POST.get('osd')
         stuck_value = request.POST.get('stuck')
@@ -363,7 +518,16 @@ def pg_ls_by_osd(request):
         template = loader.get_template('pages/pg_ls_by_osd.html')
         return HttpResponse(template.render(context, request))
 
+
 def pg_ls_by_primary(request):
+    """
+    return placement group by primary osd rendered page
+
+    get data from html form, feed data into cluster,
+    and then sent data to html,format the data into structured for html
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         primary_osd_id = request.POST.get('primary_osd')
         stuck_value = request.POST.get('stuck')
@@ -395,7 +559,15 @@ def pg_ls_by_primary(request):
         template = loader.get_template('pages/pg_ls_by_primary.html')
         return HttpResponse(template.render(context, request))
 
+
 def pool_basic_info(request):
+    """
+    return pools information rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
 
     _, pool_info = API_WRAPPER.osd_pool_ls(detail='detail', body='json')
 
@@ -408,6 +580,13 @@ def pool_basic_info(request):
 
 
 def pool_details(request):
+    """
+    return pools information rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, pool_info = API_WRAPPER.osd_pool_ls(detail='detail', body='json')
 
     context = {
@@ -417,7 +596,16 @@ def pool_details(request):
     template = loader.get_template('pages/pool_details.html')
     return HttpResponse(template.render(context, request))
 
+
 def pool_parameters(request):
+    """
+    return pools parameters rendered page
+
+    get data from html form, feed data into cluster,
+    get value and sent to html for viewing the parameter
+    :param request:
+    :return:
+    """
 
     if request.method == "POST":
 
@@ -447,7 +635,15 @@ def pool_parameters(request):
         template = loader.get_template('pages/pool_parameters.html')
         return HttpResponse(template.render(context, request))
 
+
 def pool_rbps(request):
+    """
+    return pools read byte per second rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, pool_stats = API_WRAPPER.osd_pool_stats(body='json')
 
     context = {
@@ -457,7 +653,15 @@ def pool_rbps(request):
     template = loader.get_template('pages/pool_rbps.html')
     return HttpResponse(template.render(context, request))
 
+
 def pool_wbps(request):
+    """
+    return pools write byte per second rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, pool_stats = API_WRAPPER.osd_pool_stats(body='json')
 
     context = {
@@ -467,7 +671,15 @@ def pool_wbps(request):
     template = loader.get_template('pages/pool_wbps.html')
     return HttpResponse(template.render(context, request))
 
+
 def pool_rops(request):
+    """
+    return pools read operation per second rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, pool_stats = API_WRAPPER.osd_pool_stats(body='json')
 
     context = {
@@ -477,7 +689,15 @@ def pool_rops(request):
     template = loader.get_template('pages/pool_rops.html')
     return HttpResponse(template.render(context, request))
 
+
 def pool_wops(request):
+    """
+    return pools write operation per second rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, pool_stats = API_WRAPPER.osd_pool_stats(body='json')
 
     context = {
@@ -487,7 +707,15 @@ def pool_wops(request):
     template = loader.get_template('pages/pool_wops.html')
     return HttpResponse(template.render(context, request))
 
+
 def auth_user_list(request):
+    """
+    return cluster user list rendered page
+
+    get data from cluster,format the data into structured for html
+    :param request:
+    :return:
+    """
     _, user_list = API_WRAPPER.auth_list(body='json')
 
     context = {

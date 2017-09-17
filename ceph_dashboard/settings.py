@@ -12,16 +12,16 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import ldap
-from django_auth_ldap.config import LDAPSearch,GroupOfNamesType,LDAPGroupType
+from django_auth_ldap.config import LDAPSearch, LDAPGroupType
 
 
 AUTH_LDAP_SERVER_URI = "ldap://research.ipvrajib.com"
 
 AUTH_LDAP_BIND_DN = "dc=ipvrajib,dc=com"
 
-#AUTH_LDAP_BIND_PASSWORD = "rajib123"
+# AUTH_LDAP_BIND_PASSWORD = "rajib123"
 
-AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=ipvrajib,dc=com",ldap.SCOPE_SUBTREE,"(uid=%(user)s)")
+AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=ipvrajib,dc=com", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
 
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,cn=users,cn=accounts,dc=ipvrajib,dc=com"
 
@@ -29,8 +29,8 @@ AUTH_LDAP_START_TLS = False
 
 # Set up the basic group parameters.
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch("cn=groups,cn=accounts,dc=ipvrajib,dc=com",
-    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
-  )
+                                    ldap.SCOPE_SUBTREE,
+                                    "(objectClass=groupOfNames)")
 AUTH_LDAP_GROUP_TYPE = LDAPGroupType()
 
 # # Simple group restrictions
@@ -66,13 +66,13 @@ SECRET_KEY = 'v96464tj1*-3z*#glay2pv=)4$x+-hi^ydb$7xr1sq=!6)-i&j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.8.79','cephnode1']
+ALLOWED_HOSTS = ['192.168.8.79', 'cephnode1']
 
 
 # Application definition
 
 AUTHENTICATION_BACKENDS = ['django_auth_ldap.backend.LDAPBackend',
-        'django.contrib.auth.backends.ModelBackend']
+                           'django.contrib.auth.backends.ModelBackend']
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-#SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 MIDDLEWARE_CLASSES = [
@@ -117,8 +117,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ceph_dashboard.wsgi.application'
 
-
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -127,8 +125,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cephdashboard',
         'USER': 'root',
-        'PASSWORD':'rajib123',
-        'HOST':'localhost',
+        'PASSWORD': 'rajib123',
+        'HOST': 'localhost',
     }
 }
 
