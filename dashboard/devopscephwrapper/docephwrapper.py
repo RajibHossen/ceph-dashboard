@@ -630,15 +630,15 @@ class CephWrapper(client.CephClient):
         """
         return self.get('mon_status', **kwargs)
 
-    def mon_metadata(self, id=None, **kwargs):
+    def mon_metadata(self, mon_id=None, **kwargs):
         """
         Get monitor nodes metadata
-        :param id:
+        :param mon_id:
         :param kwargs:
         :return:
         """
         if id is not None:
-            return self.get('mon/metadata?id={0}'.format(id), **kwargs)
+            return self.get('mon/metadata?id={0}'.format(mon_id), **kwargs)
         else:
             return self.get('mon/metadata', **kwargs)
 
@@ -730,15 +730,15 @@ class CephWrapper(client.CephClient):
         else:
             return self.get('osd/dump', **kwargs)
 
-    def osd_find(self, id, **kwargs):
+    def osd_find(self, osd_id, **kwargs):
         """
         Find osd node location in cluster
-        :param id:
+        :param osd_id:
         :param kwargs:
         :return:
         """
         return self.get('osd/find?id={0}'
-                        .format(id), **kwargs)
+                        .format(osd_id), **kwargs)
 
     def osd_getcrushmap(self, epoch=None, **kwargs):
         """
@@ -880,15 +880,15 @@ class CephWrapper(client.CephClient):
         else:
             return self.get('osd/tree', **kwargs)
 
-    def osd_metadata(self, id=None, **kwargs):
+    def osd_metadata(self, osd_id=None, **kwargs):
         """
         get osd metadata
-        :param id:
+        :param osd_id:
         :param kwargs:
         :return:
         """
         if id is not None:
-            return self.get('osd/metadata?id={0}'.format(id), **kwargs)
+            return self.get('osd/metadata?id={0}'.format(osd_id), **kwargs)
         else:
             return self.get('osd/metadata', **kwargs)
 
@@ -1051,10 +1051,10 @@ class CephWrapper(client.CephClient):
         return self.put('osd/crush/rule/rm?name={0}'
                         .format(name), **kwargs)
 
-    def osd_crush_set(self, id, name, weight, args, **kwargs):
+    def osd_crush_set(self, osd_id, name, weight, args, **kwargs):
         """
         Set crush rule
-        :param id:
+        :param osd_id:
         :param name:
         :param weight:
         :param args:
@@ -1062,7 +1062,7 @@ class CephWrapper(client.CephClient):
         :return:
         """
         return self.put('osd/crush/set?id={0}&weight={1}&args={2}'
-                        .format(id, name, weight, args), **kwargs)
+                        .format(osd_id, name, weight, args), **kwargs)
 
     def osd_crush_tunables(self, profile, **kwargs):
         """
@@ -1115,16 +1115,16 @@ class CephWrapper(client.CephClient):
         return self.put('osd/in?ids={0}'
                         .format(ids), **kwargs)
 
-    def osd_lost(self, id, sure, **kwargs):
+    def osd_lost(self, osd_id, sure, **kwargs):
         """
 
-        :param id:
+        :param osd_id:
         :param sure:
         :param kwargs:
         :return:
         """
         return self.put('osd/lost?id={0}&sure={1}'
-                        .format(id, sure), **kwargs)
+                        .format(osd_id, sure), **kwargs)
 
     def osd_out(self, ids, **kwargs):
         """
