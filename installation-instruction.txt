@@ -15,4 +15,11 @@
 15. remove the root static directory `cd ..` `rm -rf static/`
 13. start and enable httpd service
 
+Run Ceph API server
+1. copy the ceph-rest.py to ceph server
+2. change ceph username, cluster name if necessary
+3. run gunicorn app using the command in daemon mode.
+    gunicorn ceph-rest:app -b 192.168.120.13:8090 -D
+4. point this IP with port to ceph monitoring app
+
 

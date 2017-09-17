@@ -637,7 +637,7 @@ class CephWrapper(client.CephClient):
         :param kwargs:
         :return:
         """
-        if id is not None:
+        if mon_id is not None:
             return self.get('mon/metadata?id={0}'.format(mon_id), **kwargs)
         else:
             return self.get('mon/metadata', **kwargs)
@@ -887,7 +887,7 @@ class CephWrapper(client.CephClient):
         :param kwargs:
         :return:
         """
-        if id is not None:
+        if osd_id is not None:
             return self.get('osd/metadata?id={0}'.format(osd_id), **kwargs)
         else:
             return self.get('osd/metadata', **kwargs)

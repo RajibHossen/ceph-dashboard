@@ -175,7 +175,7 @@ def ceph_osd_search(request):
         osd_id = int(osd_id)
 
         _, data = API_WRAPPER.osd_find(osd_id=osd_id, body='json')
-        _, metadata = API_WRAPPER.osd_metadata(id=osd_id, body='json')
+        _, metadata = API_WRAPPER.osd_metadata(osd_id=osd_id, body='json')
         context = {
             'osd_searched': data,
             'osd_metadata': metadata
