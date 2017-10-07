@@ -17,7 +17,6 @@ except ImportError:
     import simplejson as json
 
 
-
 import dashboard.devopscephwrapper.doexceptions as exceptions
 
 

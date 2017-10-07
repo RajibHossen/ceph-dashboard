@@ -77,6 +77,7 @@ def ajax_dashboard(request):
     osd_metadata = cephserviceutility.format_json(osd_metadata)
     mon_metadata = cephserviceutility.format_json(mon_metadata)
     osd_performance = cephserviceutility.data_format_for_bar_chart(osd_performance)
+
     context = {
         'cephstatus': status,
         'report': report,
@@ -85,6 +86,7 @@ def ajax_dashboard(request):
         'mon_metadata': mon_metadata,
         'osd_perf': osd_performance
     }
+
     template = loader.get_template('pages/dashboard.html')
     output = template.render(context, request)
     return HttpResponse(output)
